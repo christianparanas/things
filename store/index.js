@@ -1,9 +1,9 @@
 export const state = () => ({
-  authenticated: 0
+  authenticated: false
 })
 
 export const mutations = {
-  increment(state) {
-    state.counter++
+  login(state) {
+    state.authenticated = true
   }
 }

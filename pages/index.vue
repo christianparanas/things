@@ -1,22 +1,23 @@
 <template>
   <div class="container">
-    <div @click="auth" class="login">Google Login</div>
+    <div @click="auth" class="login">Home</div>
   </div>
 </template>
 
 <script>
 export default {
+  middleware: 'authenticated',
   methods: {
-    auth() {
-      var provider = new this.$fireModule.auth.GoogleAuthProvider();
-      this.$fire.auth.signInWithPopup(provider).then((result) => {
-        var credential = result.credential;
+    // auth() {
+    //   var provider = new this.$fireModule.auth.GoogleAuthProvider();
+    //   this.$fire.auth.signInWithPopup(provider).then((result) => {
+    //     var credential = result.credential;
 
-        var user = this.$fire.auth.currentUser;
+    //     var user = this.$fire.auth.currentUser;
 
-        console.log(user.email)
-      })
-    }
+    //     console.log(user.email)
+    //   })
+    // }
   }
 }
 </script>
@@ -29,7 +30,6 @@ export default {
     place-items: center;
 
     .login {
-      border: 1px solid gray;
       padding: 5px 10px;
       cursor: pointer;
 

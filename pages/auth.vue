@@ -13,6 +13,11 @@ export default {
         var credential = result.credential;
 
         var user = this.$fire.auth.currentUser;
+        if(user) {
+          this.$store.commit('login')
+          console.log(this.$store.state.authenticated)
+          this.$router.push('/')
+        }
 
         console.log(user.email)
       })
