@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div class="login">Home</div>
+  <div class="main-container">
+    <Nav />
     <div class="user">{{ user }}</div>
     <button @click="signOut" class="logout">Logout</button>
   </div>
@@ -33,11 +33,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    height: 100vh;
-    width: 100%;
-    display: grid;
-    place-items: center;
+  .main-container {
+    
 
     .login {
       padding: 5px 10px;

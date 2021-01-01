@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <button @click="googleAuth" class="login">Google Login</button>
-    <button @click="facebookAuth" class="login">Facebook Login</button>
+    <div class="">
+      <button @click="googleAuth" class="login">Google Login</button>
+      <button @click="facebookAuth" class="login">Facebook Login</button>
+    </div>
   </div>
 </template>
 
