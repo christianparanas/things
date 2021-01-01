@@ -29,7 +29,7 @@ export default {
         userInput: ''
       }
     },
-    async beforeMount() {
+    beforeMount() {
        this.retrieveData()
     },
     methods: {
@@ -42,9 +42,9 @@ export default {
         this.retrieveData()
       },
 
-      async retrieveData() {
+      retrieveData() {
         this.blogsArr = []
-        await this.fireDB.collection("users").get().then((querySnapshot) => {
+        this.fireDB.collection("users").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             this.blogsArr.push(doc.data());
           });
