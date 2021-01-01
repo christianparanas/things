@@ -42,6 +42,7 @@ export default {
     .login {
       padding: 5px 10px;
       cursor: pointer;
+      webkit-tap-highlight-color: transparent;
 
     }
 
@@ -49,6 +50,7 @@ export default {
       padding: 5px 10px;
       cursor: pointer;
       border: 1px solid pink;
+      webkit-tap-highlight-color: transparent;
     }
   }
 
