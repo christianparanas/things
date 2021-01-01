@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
-    <Nav />
-    <div class="user">{{ user }}</div>
+    <Nav :user="user" />
+    
     <button @click="signOut" class="logout">Logout</button>
   </div>
 </template>
@@ -16,7 +16,8 @@ export default {
     async beforeCreate() {
       await this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
-        this.user = this.$fire.auth.currentUser.email || this.$fire.auth.currentUser.displayName
+        this.user = this.$fire.auth.currentUser
+        console.log(this.$fire.auth.currentUser)
       } else {
         this.$router.push('/auth/login')
       }
@@ -34,7 +35,7 @@ export default {
 
 <style lang="scss" scoped>
   .main-container {
-    
+
 
     .login {
       padding: 5px 10px;
