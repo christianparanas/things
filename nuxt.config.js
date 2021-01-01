@@ -1,10 +1,11 @@
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
+  ssr: false,
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'RandomThings',
+    title: 'Random Stuffs',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -65,7 +66,8 @@ export default {
       appId: '1:960500097488:web:6a1b99a1d83d6de96859d5',
     },
     services: {
-      auth: true // Just as example. Can be any other service.
+      auth: true, // Just as example. Can be any other service.
+      firestore: true,
     }
   },
 
