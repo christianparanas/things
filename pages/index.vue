@@ -40,6 +40,7 @@ export default {
         })
 
         this.retrieveData()
+        // this.updatesFire()
       },
 
       retrieveData() {
@@ -49,7 +50,13 @@ export default {
             this.blogsArr.push(doc.data());
           });
         });
-      }
+      },
+      // async updatesFire() {
+      //   await this.fireDB.collection("users").doc("SF")
+      //   .onSnapshot(function(doc) {
+      //       console.log("Current data: ", doc.data());
+      //   });
+      // }
     },
      beforeCreate() {
       this.$fire.auth.onAuthStateChanged((user) => {
