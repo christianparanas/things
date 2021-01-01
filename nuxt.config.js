@@ -41,6 +41,7 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     '@nuxtjs/firebase',
+    ['cookie-universal-nuxt', { parseJSON: false }]
   ],
 
   pwa: {

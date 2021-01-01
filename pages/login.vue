@@ -6,20 +6,30 @@
 
 <script>
 export default {
+  data() {
+    return {
+      provider: new this.$fireModule.auth.GoogleAuthProvider()
+    }
+  },
+  async beforeCreate() {
+      await this.$fire.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.$router.push('/')
+      }
+    })
+  },
   methods: {
-    auth() {
-      var provider = new this.$fireModule.auth.GoogleAuthProvider();
-      this.$fire.auth.signInWithPopup(provider).then((result) => {
+    async auth() {
+
+      await this.$fire.auth.signInWithPopup(this.provider).then((result) => {
         var credential = result.credential;
 
         var user = this.$fire.auth.currentUser;
         if(user) {
-          this.$store.commit('login')
-          console.log(this.$store.state.authenticated)
           this.$router.push('/')
         }
-
-        console.log(user.email)
+      }).catch((error) => {
+        console.log('popup closed')
       })
     }
   }

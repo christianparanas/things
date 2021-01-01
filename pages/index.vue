@@ -1,23 +1,33 @@
 <template>
   <div class="container">
-    <div @click="auth" class="login">Home</div>
+    <div class="login">Home</div>
+    <div class="user">{{ user }}</div>
+    <div @click="signOut" class="logout">Logout</div>
   </div>
 </template>
 
 <script>
 export default {
-  middleware: 'authenticated',
+    data() {
+      return {
+        user: ''
+      }
+    },
+    async beforeCreate() {
+      await this.$fire.auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.user = this.$fire.auth.currentUser.email
+      } else {
+        this.$router.push('/login')
+      }
+    })
+  },
   methods: {
-    // auth() {
-    //   var provider = new this.$fireModule.auth.GoogleAuthProvider();
-    //   this.$fire.auth.signInWithPopup(provider).then((result) => {
-    //     var credential = result.credential;
-
-    //     var user = this.$fire.auth.currentUser;
-
-    //     console.log(user.email)
-    //   })
-    // }
+    signOut() {
+      this.$fire.auth.signOut().then(() => {
+        console.log('sign out success!')
+      })
+    }
   }
 }
 </script>
@@ -33,6 +43,12 @@ export default {
       padding: 5px 10px;
       cursor: pointer;
 
+    }
+
+    .logout {
+      padding: 5px 10px;
+      cursor: pointer;
+      border: 1px solid pink;
     }
   }
 
