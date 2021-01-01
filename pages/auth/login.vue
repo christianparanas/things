@@ -15,17 +15,16 @@ export default {
       googleProvider: new this.$fireModule.auth.GoogleAuthProvider()
     }
   },
-  async beforeCreate() {
-      await this.$fire.auth.onAuthStateChanged((user) => {
+  beforeCreate() {
+      this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.$router.push('/')
       }
     })
   },
   methods: {
-    async googleAuth() {
-
-      await this.$fire.auth.signInWithPopup(this.googleProvider).then((result) => {
+    googleAuth() {
+      this.$fire.auth.signInWithPopup(this.googleProvider).then((result) => {
         var credential = result.credential;
 
         var user = this.$fire.auth.currentUser;
@@ -36,9 +35,8 @@ export default {
         console.log('popup closed')
       })
     },
-    async facebookAuth() {
-
-      await this.$fire.auth.signInWithPopup(this.facebookProvider).then((result) => {
+    facebookAuth() {
+      this.$fire.auth.signInWithPopup(this.facebookProvider).then((result) => {
         var credential = result.credential;
 
         console.log(result.user)

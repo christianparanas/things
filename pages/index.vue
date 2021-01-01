@@ -1,8 +1,8 @@
 <template>
   <div class="main-container">
     <Nav :user="user" />
+
     
-    <button @click="signOut" class="logout">Logout</button>
   </div>
 </template>
 
@@ -13,8 +13,8 @@ export default {
         user: ''
       }
     },
-    async beforeCreate() {
-      await this.$fire.auth.onAuthStateChanged((user) => {
+     beforeCreate() {
+      this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
         console.log(this.$fire.auth.currentUser)
@@ -23,13 +23,6 @@ export default {
       }
     })
   },
-  methods: {
-    signOut() {
-      this.$fire.auth.signOut().then(() => {
-        console.log('sign out success!')
-      })
-    }
-  }
 }
 </script>
 
