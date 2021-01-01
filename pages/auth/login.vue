@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <button @click="auth" class="login">Google Login</button>
+    <button @click="googleAuth" class="login">Google Login</button>
+    <button @click="facebookAuth" class="login">Facebook Login</button>
   </div>
 </template>
 
@@ -8,7 +9,8 @@
 export default {
   data() {
     return {
-      provider: new this.$fireModule.auth.GoogleAuthProvider()
+      facebookProvider: new this.$fireModule.auth.FacebookAuthProvider(),
+      googleProvider: new this.$fireModule.auth.GoogleAuthProvider()
     }
   },
   async beforeCreate() {
@@ -19,9 +21,9 @@ export default {
     })
   },
   methods: {
-    async auth() {
+    async googleAuth() {
 
-      await this.$fire.auth.signInWithPopup(this.provider).then((result) => {
+      await this.$fire.auth.signInWithPopup(this.googleProvider).then((result) => {
         var credential = result.credential;
 
         var user = this.$fire.auth.currentUser;
@@ -30,6 +32,21 @@ export default {
         }
       }).catch((error) => {
         console.log('popup closed')
+      })
+    },
+    async facebookAuth() {
+
+      await this.$fire.auth.signInWithPopup(this.facebookProvider).then((result) => {
+        var credential = result.credential;
+
+        console.log(result.user)
+
+        var user = this.$fire.auth.currentUser;
+        if(user) {
+          this.$router.push('/')
+        }
+      }).catch((error) => {
+        console.log(error.code)
       })
     }
   }

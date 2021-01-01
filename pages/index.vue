@@ -16,9 +16,9 @@ export default {
     async beforeCreate() {
       await this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
-        this.user = this.$fire.auth.currentUser.email
+        this.user = this.$fire.auth.currentUser.email || this.$fire.auth.currentUser.displayName
       } else {
-        this.$router.push('/login')
+        this.$router.push('/auth/login')
       }
     })
   },
