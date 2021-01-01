@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div @click="auth" class="login">Google Login</div>
+    <button @click="auth" class="login">Google Login</button>
   </div>
 </template>
 

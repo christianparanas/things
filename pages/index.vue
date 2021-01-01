@@ -2,7 +2,7 @@
   <div class="container">
     <div class="login">Home</div>
     <div class="user">{{ user }}</div>
-    <div @click="signOut" class="logout">Logout</div>
+    <button @click="signOut" class="logout">Logout</button>
   </div>
 </template>
 
