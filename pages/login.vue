@@ -21,7 +21,7 @@ export default {
   methods: {
     async auth() {
 
-      await this.$fire.auth.signInWithPopup(this.provider).then((result) => {
+      await this.$fire.auth.signInWithRedirect(this.provider).then((result) => {
         var credential = result.credential;
 
         var user = this.$fire.auth.currentUser;
