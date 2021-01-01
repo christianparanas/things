@@ -74,7 +74,7 @@
 			position: absolute;
 			top: 0;
 			right: 0;
-			width: 220px;
+			width: 250px;
 			height: 100%;
 			padding: 30px 20px 20px;
 
