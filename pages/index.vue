@@ -3,7 +3,7 @@
     <Nav :user="user" />
 
     <div class="create">
-      <form action="" @submit.prevent="postNewBlog">
+      <form action="" @submit.prevent="newPost">
         <input type="text" placeholder="Write something" v-model="userInput">
         <button name="submit">Post</button>
       </form>
@@ -11,7 +11,7 @@
 
     <div class="posts-wrapper">
       <div class="title">Random Posts</div>
-      <div class="post" v-for="(post, index) in postsArr" :key="post.index">
+      <div class="post" v-for="post in postsArr" :key="post.postId">
         <img :src="dynaImg(post.userPic)" alt="">
         <div class="author">{{ post.author }}</div>
         <div class="content">{{ post.content }}</div>
@@ -31,14 +31,16 @@ export default {
         userInput: ''
       }
     },
+    // fetch all data from users and call updates hint
     beforeMount() {
-       this.retrieveData()
+       this.fetchAllPosts()
        this.updatesFire()
     },
     methods: {
-      postNewBlog() {
+      newPost() {
         if(this.userInput) {
           this.fireDB.collection("posts").add({
+            postId: this.postsArr.length + 1,
             uid: this.user.uid,
             userPic: this.user.photoURL,
             author: this.user.displayName,
@@ -46,12 +48,11 @@ export default {
             date: new Date().toLocaleString()
           })
 
-          this.retrieveData()
           this.userInput = ''
         }
       },
-
-      retrieveData() {
+      // fetch all posts
+      fetchAllPosts() {
         this.postsArr = []
         this.fireDB.collection("posts").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -62,13 +63,15 @@ export default {
       dynaImg(photo) {
         return photo
       },
+      // call this function if there are new posts made by the users
       updatesFire() {
         this.fireDB.collection("posts")
         .onSnapshot((doc) => {
-          this.retrieveData()
+          this.fetchAllPosts()
         });
       },
     },
+    // before create check if user authenticated
      beforeCreate() {
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
@@ -97,7 +100,7 @@ export default {
       }
 
       .post {
-        margin-top: 20px;
+        margin-top: 10px;
         padding: 10px 0;
         width: fit-content;
         display: grid;
