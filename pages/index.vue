@@ -56,12 +56,14 @@ export default {
       // fetch all posts
       fetchAllPosts() {
         this.postsArr = []
-        this.fireDB.collection("posts").get().then((querySnapshot) => {
+        this.fireDB.collection("posts")
+        .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             this.postsArr.push(doc.data());
           });
         });
       },
+
       dynaImg(photo) {
         return photo
       },
@@ -109,6 +111,7 @@ export default {
         display: grid;
         grid-template-columns: 50px 1fr;
         position: relative;
+        z-index: -1;
 
         img {
           border-radius: 50%;
