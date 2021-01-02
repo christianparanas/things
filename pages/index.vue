@@ -33,6 +33,7 @@ export default {
     },
     beforeMount() {
        this.retrieveData()
+       this.updatesFire()
     },
     methods: {
       postNewBlog() {
@@ -46,6 +47,7 @@ export default {
           })
 
           this.retrieveData()
+          this.userInput = ''
         }
       },
 
@@ -60,12 +62,12 @@ export default {
       dynaImg(photo) {
         return photo
       },
-      // async updatesFire() {
-      //   await this.fireDB.collection("users").doc("SF")
-      //   .onSnapshot(function(doc) {
-      //       console.log("Current data: ", doc.data());
-      //   });
-      // }
+      updatesFire() {
+        this.fireDB.collection("posts")
+        .onSnapshot((doc) => {
+          this.retrieveData()
+        });
+      },
     },
      beforeCreate() {
       this.$fire.auth.onAuthStateChanged((user) => {
