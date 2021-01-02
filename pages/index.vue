@@ -4,15 +4,17 @@
 
     <div class="create">
       <form action="" @submit.prevent="postNewBlog">
-        <input type="text" v-model="userInput">
+        <input type="text" placeholder="Write something" v-model="userInput">
         <button name="submit">Post</button>
       </form>
     </div>
 
-    <div class="blogs-wrapper">
-      <div class="blog" v-for="(blog, index) in blogsArr" :key="blog.index">
-        <div class="author">{{ blog.author }}</div>
-        <div class="content">{{ blog.content }}</div>
+    <div class="posts-wrapper">
+      <div class="title">Random Posts</div>
+      <div class="post" v-for="(post, index) in postsArr" :key="post.index">
+        <img :src="dynaImg(post.userPic)" alt="">
+        <div class="author">{{ post.author }}</div>
+        <div class="content">{{ post.content }}</div>
       </div>
     </div>
     
@@ -25,7 +27,7 @@ export default {
       return {
         user: '',
         fireDB: this.$fireModule.firestore(),
-        blogsArr: [],
+        postsArr: [],
         userInput: ''
       }
     },
@@ -34,22 +36,29 @@ export default {
     },
     methods: {
       postNewBlog() {
-        this.fireDB.collection("users").add({
+        if(this.userInput) {
+          this.fireDB.collection("posts").add({
+            uid: this.user.uid,
+            userPic: this.user.photoURL,
             author: this.user.displayName,
             content: this.userInput,
-        })
+            date: new Date().toLocaleString()
+          })
 
-        this.retrieveData()
-        // this.updatesFire()
+          this.retrieveData()
+        }
       },
 
       retrieveData() {
-        this.blogsArr = []
-        this.fireDB.collection("users").get().then((querySnapshot) => {
+        this.postsArr = []
+        this.fireDB.collection("posts").get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            this.blogsArr.push(doc.data());
+            this.postsArr.push(doc.data());
           });
         });
+      },
+      dynaImg(photo) {
+        return photo
       },
       // async updatesFire() {
       //   await this.fireDB.collection("users").doc("SF")
@@ -78,11 +87,39 @@ export default {
       cursor: pointer;
     }
 
-    .blogs-wrapper {
+    .posts-wrapper {
       padding: 20px;
 
-      .blog {
-        padding: 20px 10px;
+      .title {
+        font-size: 20px;
+      }
+
+      .post {
+        margin-top: 20px;
+        padding: 10px 0;
+        width: fit-content;
+        display: grid;
+        grid-template-columns: 50px 1fr;
+
+        img {
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+        }
+
+        .author {
+          padding-top: 10px;
+        }
+
+        .content {
+          grid-column-start: 2;
+          margin-top: 7px;
+          padding: 5px 15px;
+          width: fit-content;
+          border-radius: 10px;
+          font-size: 12px;
+          border: 1px solid #2d3748;
+        }
       }
     }
 
@@ -90,9 +127,20 @@ export default {
       padding: 20px;
 
       form {
+        margin-top: 50px;
 
         input {
-          color: black;
+          padding: 10px 15px;
+          outline: none;
+          border: 0;
+          border-radius: 8px;
+          background-color: #2d3748;
+        }
+
+        button {
+          background-color: teal;
+          padding: 10px 20px;
+          border-radius: 8px;
         }
       }
     }
