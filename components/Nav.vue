@@ -69,6 +69,9 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 20px;
+		position: fixed;
+		width: 100%;
+		background-color: #1a202c;
 
 		.logo {
 			display: grid;
@@ -81,7 +84,7 @@
 			top: 0;
 			right: 0;
 			width: 250px;
-			height: 100%;
+			height: 100vh;
 			padding: 30px 20px 20px;
 
 			.menu-wrapper {

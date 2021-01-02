@@ -12,6 +12,7 @@
     <div class="posts-wrapper">
       <div class="title">Random Posts</div>
       <div class="post" v-for="post in postsArr" :key="post.postId">
+        <div class="postDate">{{ post. date }}</div>
         <img :src="dynaImg(post.userPic)" alt="">
         <div class="author">{{ post.author }}</div>
         <div class="content">{{ post.content }}</div>
@@ -28,7 +29,8 @@ export default {
         user: '',
         fireDB: this.$fireModule.firestore(),
         postsArr: [],
-        userInput: ''
+        userInput: '',
+        postsNumberInFire: 0
       }
     },
     // fetch all data from users and call updates hint
@@ -40,7 +42,7 @@ export default {
       newPost() {
         if(this.userInput) {
           this.fireDB.collection("posts").add({
-            postId: this.postsArr.length + 1,
+            postId: this.postsNumberInFire + 1,
             uid: this.user.uid,
             userPic: this.user.photoURL,
             author: this.user.displayName,
@@ -67,6 +69,7 @@ export default {
       updatesFire() {
         this.fireDB.collection("posts")
         .onSnapshot((doc) => {
+          this.postsNumberInFire = doc.size
           this.fetchAllPosts()
         });
       },
@@ -105,11 +108,19 @@ export default {
         width: fit-content;
         display: grid;
         grid-template-columns: 50px 1fr;
+        position: relative;
 
         img {
           border-radius: 50%;
           width: 40px;
           height: 40px;
+        }
+
+        .postDate {
+          position: absolute;
+          font-size: 8px;
+          top: 40px;
+          left: 50px;
         }
 
         .author {
@@ -118,7 +129,7 @@ export default {
 
         .content {
           grid-column-start: 2;
-          margin-top: 7px;
+          margin-top: 12px;
           padding: 5px 15px;
           width: fit-content;
           border-radius: 10px;
@@ -132,7 +143,7 @@ export default {
       padding: 20px;
 
       form {
-        margin-top: 50px;
+        margin-top: 100px;
 
         input {
           padding: 10px 15px;
