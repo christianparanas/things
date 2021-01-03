@@ -3,14 +3,22 @@
     <Nav :user="user" />
 
     <div class="create">
-      <form action="" @submit.prevent="newPost">
+      <div class="createClick">
         <img v-cloak :src="dynaImg(user.photoURL)" alt="">
-        <textarea v-model="userInput" placeholder="Write something" name="" cols="100%" rows="3"></textarea>
-        <button name="submit">
-          <svg class="w-6 h-6" style="fill: #fff" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m8.75 17.612v4.638c0 .324.208.611.516.713.077.025.156.037.234.037.234 0 .46-.11.604-.306l2.713-3.692z"/><path d="m23.685.139c-.23-.163-.532-.185-.782-.054l-22.5 11.75c-.266.139-.423.423-.401.722.023.3.222.556.505.653l6.255 2.138 13.321-11.39-10.308 12.419 10.483 3.583c.078.026.16.04.242.04.136 0 .271-.037.39-.109.19-.116.319-.311.352-.53l2.75-18.5c.041-.28-.077-.558-.307-.722z"/></svg>
-        </button>
-        
-      </form>
+        <input @click="showComposeWindow" type="text" placeholder="What's on your mind?">
+<!--         
+         -->
+      </div>
+      <div class="createWindow" v-if="showCompose">
+        <div class="create_nav">
+          <div @click="showComposeWindow" class="">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h14"></path></svg>
+          </div>
+          <div class="">Create Post</div>
+          <div class="" @click="newPost">Post</div>
+            <textarea v-model="userInput" placeholder="Write something" name="" cols="100%" rows="5"></textarea>
+        </div>
+      </div>
     </div>
 
     <div class="posts-wrapper">
@@ -49,7 +57,8 @@ export default {
         fireDB: this.$fireModule.firestore(),
         postsArr: [],
         userInput: '',
-        postsNumberInFire: 0
+        postsNumberInFire: 0,
+        showCompose: false
       }
     },
     // fetch all data from users and call updates hint
@@ -58,6 +67,9 @@ export default {
        this.updatesFire()
     },
     methods: {
+      showComposeWindow() {
+        this.showCompose = !this.showCompose
+      },
       newPost() {
         if(this.userInput) {
           this.fireDB.collection("posts").add({
@@ -70,6 +82,7 @@ export default {
           })
 
           this.userInput = ''
+          this.showComposeWindow()
         }
       },
       // fetch all posts
@@ -196,18 +209,49 @@ export default {
     .create {
       padding: 20px;
 
-      form {
-        margin-top: 60px;
-        display: flex;
+      .createWindow {
+        position: absolute;
+        background-color: #1a202c;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 20px;
 
-        img {
+        .create_nav {
+          display: grid;
+          border-bottom: 1px solid #2d3748;
+          padding-bottom: 10px;
+          grid-template-columns: 30px 1fr 30px;
+
+
+          img {
             border-radius: 50%;
             width: 40px;
             height: 40px;
             margin-right: 10px;
           }
 
-        textarea {
+
+          textarea {
+            grid-column: 1 / span 3;
+            padding: 10px 15px;
+            outline: none;
+            border: 0;
+            border-radius: 5px;
+            background-color: #2d3748;
+            width:100%;
+            margin-top: 20px;
+          }
+        }
+      }
+
+      .createClick {
+        margin-top: 60px;
+        display: flex;
+
+        input {
+          width: 100%;
           padding: 10px 15px;
           outline: none;
           border: 0;
@@ -215,14 +259,12 @@ export default {
           background-color: #2d3748;
         }
 
-        button {
-          margin: 5px 5px 0 12px;
-          width: 40px;
-          height: 30px;
-          outline: none;
+        img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
         }
-
-      
       }
     }
   }
