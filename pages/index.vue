@@ -23,7 +23,7 @@
 
     <div class="posts-wrapper">
       <hr>
-      <div class="post" v-for="(post, index) in postsArr" :key="index">
+      <div class="post" v-for="post in postsArr" :key="post.postId">
         <div class="post_details">
           <img :src="dynaImg(post.userPic)" alt="">
           <div class="">
@@ -62,8 +62,7 @@ export default {
       }
     },
     // fetch all data from users and call updates hint
-    beforeMount() {
-       this.fetchAllPosts()
+    mounted() {
        this.updatesFire()
     },
     methods: {

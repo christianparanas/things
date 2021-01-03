@@ -11,10 +11,12 @@
 export default {
   data() {
     return {
+      // init the modules
       facebookProvider: new this.$fireModule.auth.FacebookAuthProvider(),
       googleProvider: new this.$fireModule.auth.GoogleAuthProvider()
     }
   },
+  // before create check if auth is valid
   beforeCreate() {
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
@@ -23,6 +25,7 @@ export default {
     })
   },
   methods: {
+    // google auth config
     googleAuth() {
       this.$fire.auth.signInWithPopup(this.googleProvider).then((result) => {
         var credential = result.credential;
@@ -35,6 +38,7 @@ export default {
         console.log('popup closed')
       })
     },
+    // facebook auth config
     facebookAuth() {
       this.$fire.auth.signInWithPopup(this.facebookProvider).then((result) => {
         var credential = result.credential;

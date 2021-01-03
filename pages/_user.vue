@@ -8,7 +8,7 @@
 		<div class="userPosts">
 			<div class="posts-wrapper">
       <hr>
-      <div class="post" v-for="(post, index) in userData" :key="index">
+      <div class="post" v-for="post in userData" :key="post.postId">
         <div class="post_details">
           <img :src="dynaImg(post.userPic)" alt="">
           <div class="">
@@ -52,14 +52,15 @@
 			}
 		},
 		mounted() {
-			this.fetchAllPosts()
+			this.fetchUserPosts()
 			console.log(this.userId)
 		},
 		methods: {
 			dynaImg(photo) {
         return photo
       },
-			fetchAllPosts() {
+			fetchUserPosts() {
+				this.userData = []
 		    this.fireDB.collection("posts")
 		    .where("uid", "==", this.userId)
 		    .orderBy("date", "desc")
