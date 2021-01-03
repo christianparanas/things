@@ -36,8 +36,9 @@
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
         </div>
         <div class="content" v-html="post.content"></div>
+        <div v-if="post.likes" class="likes">{{ post.likes }} {{ post.likes > 1 ? 'likes' : 'like' }}</div>
         <div class="post_interact">
-          <div class="post_inter">
+          <div class="post_inter" @click="updateLikes(post.likes, post.postId)">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
             <div class="post_in">Like</div>
           </div>
@@ -61,7 +62,8 @@ export default {
         postsArr: [],
         userInput: '',
         postsNumberInFire: 0,
-        showCompose: false
+        showCompose: false,
+
       }
     },
     // fetch all data from users and call updates hint
@@ -75,18 +77,23 @@ export default {
       },
       newPost() {
         if(this.userInput) {
-          this.fireDB.collection("posts").add({
+          this.fireDB.collection("posts").doc(`${this.postsNumberInFire + 1}`).set({
             postId: this.postsNumberInFire + 1,
             uid: this.user.uid,
             userPic: this.user.photoURL,
             author: this.user.displayName,
             content: this.userInput,
-            date: new Date().toLocaleString()
+            date: new Date().toLocaleString(),
+            likes: 0,
           })
 
           this.userInput = ''
           this.showComposeWindow()
         }
+      },
+      // update like on each post onclick
+      updateLikes(prev, postId) {
+        this.fireDB.collection("posts").doc(`${postId}`).update({likes: prev + 1});
       },
 
       // fetch all posts
@@ -96,6 +103,7 @@ export default {
         .orderBy("date", "desc")
         .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
+            console.log(doc.data())
             // console.log(doc.data().content.replace(/(?:\r\n|\r|\n)/g, '<br />'))
             this.postsArr.push(doc.data());
           });
@@ -187,10 +195,16 @@ export default {
           padding: 0 10px;
           margin: 10px 0;
           word-wrap: break-word;
+          margin-bottom: 20px;
+        }
+
+        .likes {
+          font-size: 10px;
+          padding: 0 10px;
         }
 
         .post_interact {
-          margin: 20px 5px 0;
+          margin: 5px 5px 0;
           padding: 10px 20px;
           display: grid;
           border-top: 1px solid grey;

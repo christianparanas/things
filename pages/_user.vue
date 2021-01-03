@@ -81,6 +81,7 @@
 			dynaImg(photo) {
         return photo
       },
+      // fetch user posts
 			fetchUserPosts() {
 				this.userPosts = []
 		    this.fireDB.collection("posts")
