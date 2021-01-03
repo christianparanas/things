@@ -5,7 +5,7 @@
     <div class="create">
       <div class="createClick">
         <img v-cloak :src="dynaImg(user.photoURL)" alt="">
-        <input @click="showComposeWindow" type="text" placeholder="What's on your mind?">
+        <div @click="showComposeWindow" class="openCreate">What's on your mind?</div>
 <!--         
          -->
       </div>
@@ -16,7 +16,7 @@
           </div>
           <div class="">Create Post</div>
           <div class="" @click="newPost">Post</div>
-            <textarea v-model="userInput" placeholder="Write something" name="" cols="100%" rows="5"></textarea>
+            <textarea ref="createPost" v-model="userInput" placeholder="Write something" name="" cols="100%" rows="5"></textarea>
         </div>
       </div>
     </div>
@@ -69,6 +69,7 @@ export default {
     methods: {
       showComposeWindow() {
         this.showCompose = !this.showCompose
+        // this.$refs.createPost.focus();
       },
       newPost() {
         if(this.userInput) {
@@ -250,9 +251,10 @@ export default {
         margin-top: 60px;
         display: flex;
 
-        input {
+        .openCreate {
+          font-size: 11px;
           width: 100%;
-          padding: 10px 15px;
+          padding: 11px 15px 10px;
           outline: none;
           border: 0;
           border-radius: 5px;
