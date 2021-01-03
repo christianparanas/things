@@ -23,7 +23,7 @@
 
     <div class="posts-wrapper">
       <hr>
-      <div class="post" v-for="post in postsArr" :key="post.postId">
+      <div class="post" v-for="(post, index) in postsArr" :key="index">
         <div class="post_details">
           <img :src="dynaImg(post.userPic)" alt="">
           <div class="">
@@ -86,10 +86,12 @@ export default {
           this.showComposeWindow()
         }
       },
+
       // fetch all posts
       fetchAllPosts() {
         this.postsArr = []
         this.fireDB.collection("posts")
+        .orderBy("date", "desc")
         .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             // console.log(doc.data().content.replace(/(?:\r\n|\r|\n)/g, '<br />'))
