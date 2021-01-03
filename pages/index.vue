@@ -1,6 +1,7 @@
 <template>
   <div class="main-container">
     <Nav :user="user" />
+    <vue-particles class="particle" color="#dedede" :clickEffect="false"></vue-particles>
 
     <div class="create">
       <div class="createClick">
@@ -9,6 +10,7 @@
 <!--         
          -->
       </div>
+      <transition name="menuTrans">
       <div class="createWindow" v-if="showCompose">
         <div class="create_nav">
           <div @click="showComposeWindow" class="">
@@ -19,6 +21,7 @@
             <textarea ref="createPost" v-model="userInput" placeholder="Write something" name="" cols="100%" rows="5"></textarea>
         </div>
       </div>
+      </transition>
     </div>
 
     <div class="posts-wrapper">
@@ -35,11 +38,11 @@
         <div class="content" v-html="post.content"></div>
         <div class="post_interact">
           <div class="post_inter">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
             <div class="post_in">Like</div>
           </div>
           <div class="post_inter">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #fff"><path d="M12,2C6.486,2,2,5.589,2,10c0,2.908,1.898,5.516,5,6.934V22l5.34-4.005C17.697,17.852,22,14.32,22,10 C22,5.589,17.514,2,12,2z M12,16h-0.333L9,18v-2.417l-0.641-0.247C5.67,14.301,4,12.256,4,10c0-3.309,3.589-6,8-6s8,2.691,8,6 C20,13.309,16.411,16,12,16z"></path></svg>
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #fff"><path d="M12,2C6.486,2,2,5.589,2,10c0,2.908,1.898,5.516,5,6.934V22l5.34-4.005C17.697,17.852,22,14.32,22,10 C22,5.589,17.514,2,12,2z M12,16h-0.333L9,18v-2.417l-0.641-0.247C5.67,14.301,4,12.256,4,10c0-3.309,3.589-6,8-6s8,2.691,8,6 C20,13.309,16.411,16,12,16z"></path></svg>
             <div class="post_in">Comment</div>
           </div>
         </div>
@@ -117,16 +120,15 @@ export default {
       },
     },
     // before create check if user is authenticated
-     beforeCreate() {
+    beforeCreate() {
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
-        console.log(this.$fire.auth.currentUser)
-      } else {
-        this.$router.push('/auth/login')
-      }
-    })
-  },
+        } else {
+          this.$router.push('/auth/login')
+        }
+      })
+    },
 }
 </script>
 
@@ -134,6 +136,11 @@ export default {
   
 
   .main-container { 
+
+    .particle {
+
+    }
+
     -webkit-tap-highlight-color: transparent;
 
     .createFireDB, .retrieveData {
@@ -197,7 +204,7 @@ export default {
             cursor: pointer;
 
             .post_in {
-              padding-top: 2px;
+              padding-bottom: 3px;
             }
 
             svg {
@@ -209,7 +216,11 @@ export default {
     }
 
     .create {
-      padding: 20px;
+      padding: 0 20px 20px;
+
+      .menuTrans-enter-active, .menuTrans-leave-active {
+        transition: opacity .5s;
+      }
 
       .createWindow {
         position: absolute;
