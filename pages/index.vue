@@ -4,13 +4,17 @@
 
     <div class="create">
       <form action="" @submit.prevent="newPost">
-        <input type="text" placeholder="Write something" v-model="userInput">
-        <button name="submit">Post</button>
+        <img :src="dynaImg(user.photoURL)" alt="">
+        <textarea v-model="userInput" placeholder="Write something" name="" cols="100%" rows="2"></textarea>
+        <button name="submit">
+          <svg class="w-6 h-6" style="fill: #fff" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m8.75 17.612v4.638c0 .324.208.611.516.713.077.025.156.037.234.037.234 0 .46-.11.604-.306l2.713-3.692z"/><path d="m23.685.139c-.23-.163-.532-.185-.782-.054l-22.5 11.75c-.266.139-.423.423-.401.722.023.3.222.556.505.653l6.255 2.138 13.321-11.39-10.308 12.419 10.483 3.583c.078.026.16.04.242.04.136 0 .271-.037.39-.109.19-.116.319-.311.352-.53l2.75-18.5c.041-.28-.077-.558-.307-.722z"/></svg>
+        </button>
+        
       </form>
     </div>
 
     <div class="posts-wrapper">
-      <div class="title">Random Posts</div>
+      <hr>
       <div class="post" v-for="post in postsArr" :key="post.postId">
         <div class="post_details">
           <img :src="dynaImg(post.userPic)" alt="">
@@ -82,7 +86,7 @@ export default {
       dynaImg(photo) {
         return photo
       },
-      // call this function if there are new posts made by the users
+      // call this function if there are new posts made by the other users
       updatesFire() {
         this.fireDB.collection("posts")
         .onSnapshot((doc) => {
@@ -106,7 +110,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .main-container {
+  
+
+  .main-container { 
+    -webkit-tap-highlight-color: transparent;
 
     .createFireDB, .retrieveData {
       cursor: pointer;
@@ -115,15 +122,15 @@ export default {
     .posts-wrapper {
       padding: 20px;
 
-      .title {
-        font-size: 20px;
+      hr {
+        border-top: 1px solid #2d3748;
       }
 
       .post {
         margin: 10px 0 0;
         padding: 5px 5px 10px;
         background-color: #2d3748;
-        border-radius: 10px;
+        border-radius: 5px;
 
         .post_details {
           display: grid;
@@ -155,9 +162,10 @@ export default {
         }
 
         .post_interact {
-          margin-top: 20px;
-          padding: 0 20px;
+          margin: 20px 10px 0;
+          padding: 10px 20px;
           display: grid;
+          border-top: 1px solid grey;
           grid-template-columns: 1fr 1fr;
 
           .post_inter {
@@ -165,8 +173,6 @@ export default {
             display: flex;
             width: fit-content;
             margin: 0 auto;
-            padding: 5px 10px;
-            border-radius: 5px;
             cursor: pointer;
 
             .post_in {
@@ -177,11 +183,6 @@ export default {
               margin-right: 5px;
             }
           }
-
-          .post_inter:hover {
-            background-color: #1a202c;
-          }
-
         }
       }
     }
@@ -190,21 +191,32 @@ export default {
       padding: 20px;
 
       form {
-        margin-top: 100px;
+        margin-top: 60px;
+        display: flex;
 
-        input {
+        img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+          }
+
+        textarea {
           padding: 10px 15px;
           outline: none;
           border: 0;
-          border-radius: 10px;
+          border-radius: 5px;
           background-color: #2d3748;
         }
 
         button {
-          background-color: teal;
-          padding: 10px 20px;
-          border-radius: 10px;
+          margin: 5px 5px 0 12px;
+          width: 40px;
+          height: 30px;
+          outline: none;
         }
+
+      
       }
     }
   }
