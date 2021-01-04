@@ -61,7 +61,7 @@
 			position: absolute;
 			top: 20px;
 			left: 15px;
-			background-color: #2d3748;
+			background-color: rgb(45, 55, 72, .6);
 			width: fit-content;
 			padding: 7px;
 			border-radius: 50%;
@@ -76,7 +76,7 @@
 
 			.user {
 				display: flex;
-				background-color: #2d3748;
+				background-color: rgb(45, 55, 72, .6);
 				margin-bottom: 10px;
 				padding: 10px;
 				border-radius: 6px;

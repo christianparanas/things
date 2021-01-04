@@ -6,7 +6,7 @@
     <div class="create">
       <div class="createClick">
         <img v-cloak :src="dynaImg(user.photoURL)" alt="">
-        <div @click="showComposeWindow" class="openCreate">What's on your mind?</div>
+        <div @click="showComposeWindow" class="openCreate shadow-md">What's on your mind?</div>
 <!--         
          -->
       </div>
@@ -26,7 +26,7 @@
 
     <div class="posts-wrapper">
       <hr>
-      <div class="post" v-for="post in postsArr" :key="post.postId">
+      <div class="post shadow" v-for="post in postsArr" :key="post.postId">
         <div class="post_details">
           <img :src="dynaImg(post.userPic)" alt="">
           <div class="">
@@ -187,7 +187,7 @@ export default {
       .post {
         margin: 10px 0 0;
         padding: 5px 5px 0;
-        background-color: #2d3748;
+        background-color: rgb(45, 55, 72, .6);
         border-radius: 5px;
 
         .post_details {
@@ -268,7 +268,7 @@ export default {
 
       .createWindow {
         position: absolute;
-        background-color: #1a202c;
+        background-color: rgb(45, 55, 72, .7);
         top: 0;
         left: 0;
         width: 100%;

@@ -138,7 +138,7 @@
 			position: absolute;
 			top: 20px;
 			left: 15px;
-			background-color: #2d3748;
+			background-color: rgb(45, 55, 72, .6);
 			width: fit-content;
 			padding: 7px;
 			border-radius: 50%;
@@ -202,7 +202,7 @@
       .post {
         margin: 10px 0 0;
         padding: 5px 5px 0;
-        background-color: #2d3748;
+        background-color: rgb(45, 55, 72, .7);
         border-radius: 5px;
 
         .post_details {

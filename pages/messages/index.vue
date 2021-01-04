@@ -1,7 +1,7 @@
 <template>
 	<div class="convo-main-container">
 		<div class="title">
-			<svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" height="226px" width="224px" version="1.1" viewBox="0 0 224 226">
+			<svg class="w-10 h-10 shadow-md" xmlns="http://www.w3.org/2000/svg" height="226px" width="224px" version="1.1" viewBox="0 0 224 226">
 				<defs>
 					<linearGradient id="a" y1="6.76%" x2="50%" x1="50%" y2="95.6%">
 						<stop stop-color="#00C6FF" offset="0"/>
@@ -20,8 +20,8 @@
 		</NuxtLink>
 
 		<div class="convo-container">
-			<div class="convo">
-				<img src="https://avatars.dicebear.com/4.5/api/initials/Member's%20Chatbox.svg" alt="">
+			<div class="convo shadow-md">
+				<img class="shadow-md" src="https://avatars.dicebear.com/4.5/api/initials/Member's%20Chatbox.svg" alt="">
 				<div class="name">Member's Chatbox</div>
 			</div>
 		</div>
@@ -52,7 +52,7 @@
 			position: absolute;
 			top: 20px;
 			left: 15px;
-			background-color: rgb(45, 55, 72, .6);
+			background-color: rgb(45, 55, 72, .5);
 			width: fit-content;
 			padding: 7px;
 			border-radius: 50%;
@@ -62,18 +62,18 @@
 			margin-top: 60px;
 
 			.convo {
-				padding: 10px;
-				background-color: #2d3748;
-				border-radius: 10px;
+				padding: 15px 10px;
+				background-color: rgb(45, 55, 72, .5);
+				border-radius: 12px;
 				display: flex;
 
 				img {
-					width: 50px;
+					width: 40px;
 					border-radius: 50%;
 				}
 
 				.name {
-					margin: 15px 0 0 10px;
+					margin: 9px 0 0 10px;
 				}
 			}
 		}
