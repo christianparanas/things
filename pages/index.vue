@@ -268,7 +268,7 @@ export default {
 
       .createWindow {
         position: absolute;
-        background-color: #2d3748;
+        background-color: #1a202c;
         top: 0;
         left: 0;
         width: 100%;
