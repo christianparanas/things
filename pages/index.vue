@@ -73,6 +73,7 @@ export default {
     // fetch all data from users and call updates hint
     mounted() {
        this.updatesFire()
+       this.checkIfUserAlreadyInUsers()
     },
     methods: {
       showComposeWindow() {
@@ -104,10 +105,10 @@ export default {
       fetchAllPosts() {
         this.postsArr = []
         this.fireDB.collection("posts")
-        .orderBy("date", "desc")
+        .orderBy("postId", "desc")
         .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log(doc.data())
+            // console.log(doc.data())
             // console.log(doc.data().content.replace(/(?:\r\n|\r|\n)/g, '<br />'))
             this.postsArr.push(doc.data());
           });
@@ -118,7 +119,24 @@ export default {
           })
         });
       },
-
+      // this will save the current user to the users collection, if they're not in collection yet
+      saveUserInfo() {
+        this.fireDB.collection("users").doc(`${this.user.displayName}`).set({
+          uid: this.user.uid,
+          userPic: this.user.photoURL,
+          name: this.user.displayName,
+        })
+      },
+      // check if user is already in users collection, if not add them
+      checkIfUserAlreadyInUsers() {
+        this.fireDB.collection("users")
+        .get(this.user.displayName)
+        .then(doc => {
+          if(!doc.exists) {
+            this.saveUserInfo()
+          }
+        })
+      },
       dynaImg(photo) {
         return photo
       },

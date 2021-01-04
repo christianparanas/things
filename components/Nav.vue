@@ -18,7 +18,13 @@
 								<div class="see">See Profile</div>
 							</div>
 						</div>
-					</NuxtLink>	
+					</NuxtLink>
+					<NuxtLink to="/users">
+					<div class="users_nav">
+						<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: #fff"><circle fill="none" cx="12" cy="7" r="3"></circle><path d="M12 2C9.243 2 7 4.243 7 7s2.243 5 5 5 5-2.243 5-5S14.757 2 12 2zM12 10c-1.654 0-3-1.346-3-3s1.346-3 3-3 3 1.346 3 3S13.654 10 12 10zM21 21v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h2v-1c0-2.757 2.243-5 5-5h4c2.757 0 5 2.243 5 5v1H21z"></path></svg>
+						<div class="userTit">Users</div>
+					</div>
+					</NuxtLink>
 					<div class="logout" @click="signOut">
 						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12,21c4.411,0,8-3.589,8-8c0-3.35-2.072-6.221-5-7.411v2.223c1.79,1.04,3,2.973,3,5.188c0,3.309-2.691,6-6,6s-6-2.691-6-6 c0-2.215,1.21-4.149,3-5.188V5.589C6.072,6.779,4,9.65,4,13C4,17.411,7.589,21,12,21z"></path><path d="M11 2H13V12H11z"></path></svg>
 						<div class="logtext">Logout</div>
@@ -96,6 +102,16 @@
 			padding: 30px 20px 20px;
 
 			.menu-wrapper {
+
+				.users_nav {
+					display: flex;
+					margin: 30px 0;
+					padding: 10px 0;
+
+					.userTit {
+						margin: 1px 0 0 4px;
+					}
+				}
 
 				.nav_profile {
 					display: flex;
