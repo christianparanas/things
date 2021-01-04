@@ -90,9 +90,21 @@
   		this.userCre()
   	},
 		mounted() {
-			this.fetchUserPosts()
+			this.updatesFire()
+			
 		},
 		methods: {
+			// update like on each post onclick
+      updateLikes(prev, postId) {
+        this.fireDB.collection("posts").doc(`${postId}`).update({likes: prev + 1});
+      },
+      updatesFire() {
+        this.fireDB.collection("posts")
+        .onSnapshot((doc) => {
+          this.postsNumberInFire = doc.size
+          this.fetchUserPosts()
+        });
+      },
 			// get the user profile details
 			userCre() {
 				this.fireDB.collection("users")
@@ -138,7 +150,7 @@
 			position: absolute;
 			top: 20px;
 			left: 15px;
-			background-color: rgb(45, 55, 72, .6);
+			background-color: #2d3748;
 			width: fit-content;
 			padding: 7px;
 			border-radius: 50%;
@@ -202,7 +214,7 @@
       .post {
         margin: 10px 0 0;
         padding: 5px 5px 0;
-        background-color: rgb(45, 55, 72, .7);
+        background-color: #2d3748;
         border-radius: 5px;
 
         .post_details {

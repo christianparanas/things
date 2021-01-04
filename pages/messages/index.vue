@@ -20,14 +20,24 @@
 		</NuxtLink>
 
 		<div class="convo-container">
-			<div class="convo shadow-md">
+			<NuxtLink to="/messages/groupchat" @click="sole" class="convo">
 				<img class="shadow-md" src="https://avatars.dicebear.com/4.5/api/initials/Member's%20Chatbox.svg" alt="">
 				<div class="name">Member's Chatbox</div>
-			</div>
+			</NuxtLink>
 		</div>
 
 	</div>
 </template>
+
+<script>
+	export default {
+		methods: {
+			sole() {
+				console.log('hi')
+			}
+		}
+	}
+</script>
 
 
 
@@ -63,7 +73,7 @@
 
 			.convo {
 				padding: 15px 10px;
-				background-color: rgb(45, 55, 72, .5);
+				background-color: #2d3748;
 				border-radius: 12px;
 				display: flex;
 

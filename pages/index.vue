@@ -187,7 +187,7 @@ export default {
       .post {
         margin: 10px 0 0;
         padding: 5px 5px 0;
-        background-color: rgb(45, 55, 72, .6);
+        background-color: #2d3748;
         border-radius: 5px;
 
         .post_details {
@@ -268,7 +268,7 @@ export default {
 
       .createWindow {
         position: absolute;
-        background-color: rgb(45, 55, 72, .7);
+        background-color: #2d3748;
         top: 0;
         left: 0;
         width: 100%;
