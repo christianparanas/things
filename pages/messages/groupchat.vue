@@ -11,7 +11,7 @@
 		<div class="messages" ref="msg">
 			<div class="msg" v-for="arr in gcMessages" :key="arr.id" :class="arr.name == user.displayName? 'own' : 'other' ">
 				<img v-if="arr.name == user.displayName? false : true" :src="dynaImg(arr.img)" alt="">
-				<div v-if="arr.name == user.displayName? false : true" class="name">{{ arr.name }}</div>
+				<div v-if="arr.name == user.displayName? false : true" class="name">{{ arr.name.replace(/ .*/, '') }}</div>
 				<div class="content" v-html="arr.message"></div>
 			</div>
 		</div>
@@ -150,11 +150,12 @@
 				}
 
 				img {
-					width: 40px;
+					width: 37px;
 					border-radius: 50%;
 				}
 
 				.content {
+					font-size: 12px;
 					width: fit-content;
 					background-color: #2d3748;
 					padding: 8px 16px;
