@@ -1,9 +1,14 @@
 // export const state = () => ({
-//   authenticated: true
+//   users: [],
+//   userDetails: []
 // })
 
 // export const mutations = {
-//   login(state, payload) {
-//     state.authenticated = payload.isTrue
+//   setusers(state, payload) {
+//     state.users = payload.users
+//   },
+
+//   setUserDetails(state, payload) {
+//   	state.userDetails = payload.userDetails
 //   }
 // }

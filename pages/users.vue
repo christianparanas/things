@@ -42,6 +42,7 @@
           });
 
           console.log(this.users)
+          
         });
       },
       dynaImg(photo) {

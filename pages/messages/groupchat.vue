@@ -9,16 +9,16 @@
 			<div class="title">Member's GroupChat</div>
 		</div>
 		<div class="messages">
-			<div class="msg" v-for="arr in array" :key="arr.id">
+			<div class="msg" v-for="arr in gcMessages" :key="arr.id">
 				<div class="name">{{ arr.name }}</div>
-				<div class="content">{{ arr.content }}</div>
+				<div class="content">{{ arr.message }}</div>
 			</div>
 		</div>
 		<div class="reply">
-			<textarea name="" id="" cols="100%" rows="3" placeholder="Write something"></textarea>
+			<textarea name="" id="" cols="100%" v-model="msg" rows="3" placeholder="Write something"></textarea>
 			<div class="send shadow">
 				<svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12.001,1.993C6.486,1.994,2,6.48,2,11.994c0.001,5.514,4.487,10,10,10c5.515,0,10.001-4.486,10.001-10 S17.515,1.994,12.001,1.993z M12,19.994c-4.41,0-7.999-3.589-8-8c0-4.411,3.589-8,8.001-8.001c4.411,0.001,8,3.59,8,8.001 S16.412,19.994,12,19.994z"></path><path d="M12.001 8.001L7.996 12.006 11.001 12.006 11.001 16 13.001 16 13.001 12.006 16.005 12.006z"></path></svg>
-				<div class="se">Send</div>
+				<div class="se" @click="aa">Send</div>
 			</div>
 		</div>
 		
@@ -29,13 +29,92 @@
 	export default {
 		data() {
 			return {
+				user: [],
+				msg: "",
+				gcMessages: [],
+				fireRDB: this.$fireModule.database(),
 				array: [
 					{ id: 1, name: "christian", content: "Array" },
 					{ id: 2, name: "thea", content: "hi" },
 					{ id: 3, name: "chan", content: "Desk" },
 				]
 			}
-		}
+		},
+		mounted() {
+			this.fetchGCchats()
+		},
+		methods: {
+			aa() {
+				console.log(this.user)
+				this.sendData()
+			},
+			fetchGCchats() {
+				let msgRef = this.fireRDB.ref("Messages")
+				msgRef.child("MembersChatroom").on("value", (snapshot) => {
+					let list = []
+
+					for(let chat in snapshot.val()) {
+						let obj = {
+		          id: chat,
+		          userId: snapshot.val()[chat].userId,
+		          name: snapshot.val()[chat].name,
+		          message: snapshot.val()[chat].message,
+		          date: snapshot.val()[chat].date,
+		          time: snapshot.val()[chat].time,
+		          img: snapshot.val()[chat].img
+		        };
+		        list.push(obj)
+					}
+					this.gcMessages = list
+				})
+
+				console.log(this.gcMessages)
+			},
+			sendData() {
+				if(this.msg) {
+					const datex = new Date(Date.now());
+					let data = {
+						userId: this.user.uid,
+      			name: this.user.displayName,
+      			message: this.msg,
+      			date: datex.toDateString(),
+      			time: this.getTime(new Date),
+      			img: this.user.photoURL
+    			};
+
+    			let realdb = this.fireRDB.ref("Messages")
+
+    			realdb.child("MembersChatroom").push(data, (err) =>{
+    				if(err) {
+    					console.log(err)
+    				} else {
+    					this.msg = ""
+    				}
+    			})
+
+    			console.log(data)
+				}
+			},
+			getTime(date) {
+		    var hours = date.getHours();
+		    var minutes = date.getMinutes();
+		    var ampm = hours >= 12 ? "pm" : "am";
+		    hours = hours % 12;
+		    hours = hours ? hours : 12;
+		    minutes = minutes < 10 ? "0" + minutes : minutes;
+		    var strTime = hours + ":" + minutes + " " + ampm;
+		    return strTime;
+		  }
+		},
+    beforeCreate() {
+  		this.$fire.auth.onAuthStateChanged((user) => {
+  		if (user) {
+    		this.user = this.$fire.auth.currentUser
+  		} else {
+    	this.$router.push('/auth/login')
+  	}
+  })
+},
 	}
 </script>
 
