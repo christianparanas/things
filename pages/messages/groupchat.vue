@@ -6,7 +6,6 @@
 			</div>
 		</NuxtLink>
 		<div class="head">
-			<img src="https://avatars.dicebear.com/4.5/api/initials/Member's%20Chatbox.svg" alt="">
 			<div class="title">Member's GroupChat</div>
 		</div>
 		<div class="messages">
@@ -16,8 +15,11 @@
 			</div>
 		</div>
 		<div class="reply">
-			<textarea name="" id="" cols="100%" rows="3"></textarea>
-			<div class="send">Send</div>
+			<textarea name="" id="" cols="100%" rows="3" placeholder="Write something"></textarea>
+			<div class="send">
+				<svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12.001,1.993C6.486,1.994,2,6.48,2,11.994c0.001,5.514,4.487,10,10,10c5.515,0,10.001-4.486,10.001-10 S17.515,1.994,12.001,1.993z M12,19.994c-4.41,0-7.999-3.589-8-8c0-4.411,3.589-8,8.001-8.001c4.411,0.001,8,3.59,8,8.001 S16.412,19.994,12,19.994z"></path><path d="M12.001 8.001L7.996 12.006 11.001 12.006 11.001 16 13.001 16 13.001 12.006 16.005 12.006z"></path></svg>
+				<div class="">Send</div>
+			</div>
 		</div>
 		
 	</div>
@@ -45,28 +47,41 @@
 		.messages {
 			margin-top: 20px;
 			padding: 20px;
-			background-color: #2f263c;
-			height: 50vh;
+
+			border: 2px solid #2f263c;
+			height: 450px;
+			overflow-y: scroll;
 		}
 
 		.reply {
 			display: grid;
-			margin-top: 15px;
-			grid-template-columns: 1fr 100px;
+			margin-top: 10px;
 
 			textarea {
 				outline: none;
-				background-color: #e3e3e3;
-				color: #000;
-			 font-size: 12px;
+				background-color: #2d3748;
+				color: #fff;
+			 	font-size: 12px;
         padding: 10px;
-        margin: 10px 0;
         word-wrap: break-word;
+        border: none;
+        border-radius: 4px;
+        margin-bottom: 10px;
+        height: 80px;
 			}
 
 			.send {
+				padding: 10px;
 				background-color: #c83b50;
-				height: 80px;
+				height: 50px;
+				border-radius: 4px;
+				display: flex;
+				justify-content: center;
+
+				svg {
+					fill: #fff;
+					margin-right: 5px;
+				}
 			}
 		}
 
