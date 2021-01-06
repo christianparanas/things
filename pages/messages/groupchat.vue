@@ -10,7 +10,9 @@
 		</div>
 		<div class="messages" ref="msg">
 			<div class="msg" v-for="arr in gcMessages" :key="arr.id" :class="arr.name == user.displayName? 'own' : 'other' ">
+				<NuxtLink :to="msgPro(arr.userId)">
 				<img v-if="arr.name == user.displayName? false : true" :src="dynaImg(arr.img)" alt="">
+				</NuxtLink>
 				<div v-if="arr.name == user.displayName? false : true" class="name">{{ arr.name.replace(/ .*/, '') }}</div>
 				<div class="content" v-html="arr.message"></div>
 			</div>
@@ -34,17 +36,35 @@
 				msg: "",
 				gcMessages: [],
 				fireRDB: this.$fireModule.database(),
+				line: null 
 			}
 		},
+		// run this if there's an update in the component
 		updated() {
 			this.scrollToEnd()
 		},
-
+		// run this on page load
 		mounted() {
 			this.fetchGCchats()
 			this.scrollToEnd()
+			this.detectOnline()
+			this.detectOnline()
 		},
 		methods: {
+			msgPro(url) {
+				return `/${url}`
+			},
+			detectOnline() {
+
+				this.fireRDB.ref(".info/connected").on("value", function(snap) {
+				  if (snap.val() === true) {
+				    console.log("connected")
+				  } else {
+				    console.log("not connected")
+				  }
+				});
+			},
+			// scroll to bottom when new msg
 			scrollToEnd () {
 	      var content = this.$refs.msg;
 	      content.scrollTop = content.scrollHeight;
@@ -52,6 +72,7 @@
       dynaImg(photo) {
         return photo
       },
+      // fetch data from realdb
 			fetchGCchats() {
 				let msgRef = this.fireRDB.ref("Messages")
 				msgRef.child("MembersChatroom").on("value", (snapshot) => {
@@ -75,6 +96,7 @@
          })
 				})
 			},
+			// send data to realdb
 			sendData() {
 				if(this.msg) {
 					const datex = new Date(Date.now());
@@ -100,6 +122,7 @@
     			console.log(data)
 				}
 			},
+			// time converter
 			getTime(date) {
 		    var hours = date.getHours();
 		    var minutes = date.getMinutes();
@@ -150,7 +173,7 @@
 				}
 
 				img {
-					width: 37px;
+					width: 35px;
 					border-radius: 50%;
 				}
 
@@ -159,7 +182,7 @@
 					width: fit-content;
 					background-color: #2d3748;
 					padding: 8px 16px;
-					margin-left: 10px;
+					margin-left: 5px;
 					border-radius: 18px;
 					word-wrap: break-word;
 					word-break: break-all;

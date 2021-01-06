@@ -162,6 +162,7 @@ export default {
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
+        console.log(this.$fire.auth)
       } else {
         this.$router.push('/auth/login')
       }
