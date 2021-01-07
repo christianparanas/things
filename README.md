@@ -1,4 +1,3 @@
-# things
 
 ## Build Setup
 
