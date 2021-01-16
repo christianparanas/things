@@ -73,12 +73,14 @@ export default {
       grid-row-gap: 20px;
 
       .login {
-        border: 1px solid #2d3748;
-        padding: 5px 10px;
+        border: 2px solid #7C3AED;
+        outline: none;
+        padding: 4px 10px;
         cursor: pointer;
         display: flex;
         padding: 15px 25px;
-        border-radius: 4px;
+        border-radius: 5px;
+        outline: none;
 
         svg {
           margin-right: 10px;

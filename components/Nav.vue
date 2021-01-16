@@ -49,9 +49,7 @@
 					</div>
 					</NuxtLink>
 
-					<div class="logout" @click="signOut">
-						<button class="logtext">Logout</button>
-					</div>
+					<button class="logout" @click="signOut">Logout</button>
 				</div>
 			</div>
 		</transition>
@@ -164,6 +162,7 @@
 					padding: 5px 10px;
 					border-radius: 4px;
 					border: 2px solid #7C3AED;
+					outline: none;
 				}
 			}
 		}
