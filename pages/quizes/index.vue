@@ -36,7 +36,7 @@ export default {
     }
   },
   async asyncData({ $axios }) {
-    const que = await $axios.$get('https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple');
+    const que = await $axios.$get('https://opentdb.com/api.php?amount=20&category=9&difficulty=easy&type=multiple');
     const categ = await $axios.$get('https://opentdb.com/api_category.php');
     console.log(categ.trivia_categories)
     console.log(que)
@@ -82,7 +82,7 @@ export default {
       	-webkit-background-clip: text;
       	text-transform: uppercase;
       	font-size: 50px;
-      
+
       	margin: 10px 0;
       }
     }
@@ -91,7 +91,7 @@ export default {
       padding: 20px;
 
       .title {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         display: flex;
         justify-content: space-between;
 
@@ -100,8 +100,11 @@ export default {
           justify-content: space-around;
 
           & > select {
-            background-color: #7C3AED;
+            background-color: #1a202c;
+            border: 2px solid #7C3AED;
             margin-left: 5px;
+            outline: none;
+            border-radius: 4px;
           }
         }
       }
