@@ -1,14 +1,15 @@
 <template>
   <div class="quizes">
+    <Nav :user="user" />
     <div class="head">
-      OpenTDB
+      <h1>OpenTDB</h1>
     </div>
     <div class="categ">
       <div class="title">
         Categories
       </div>
       <div class="content-container">
-        <div class="content shadow-md" v-for="category in categ.trivia_categories" :key="category.id">
+        <div class="content" v-for="category in categ.trivia_categories" :key="category.id">
           {{ category.name }}
         </div>
       </div>
@@ -18,6 +19,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      user: ''
+    }
+  },
   async asyncData({ $axios }) {
     const que = await $axios.$get('https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple');
     const categ = await $axios.$get('https://opentdb.com/api_category.php');
@@ -27,19 +33,52 @@ export default {
     return {
       categ
     }
-  }
+  },
+  beforeCreate() {
+    this.$fire.auth.onAuthStateChanged((user) => {
+    if (user) {
+      this.user = this.$fire.auth.currentUser
+      console.log(this.$fire.auth)
+    } else {
+      this.$router.push('/login')
+    }
+    })
+  },
 }
 </script>
 
 <style lang="scss" scoped>
+
   .quizes {
-    padding: 20px;
 
     .head {
-      padding: 100px 0;
+      font-size: 50px;
+      font-weight: 700;
+      padding: 100px 0 20px;
+      text-align: center;
+      color: #FFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 1px;
+
+      h1 {
+        background-image: url(https://media.giphy.com/media/26BROrSHlmyzzHf3i/giphy.gif);
+      	background-size: cover;
+      	color: transparent;
+      	-moz-background-clip: text;
+      	-webkit-background-clip: text;
+      	text-transform: uppercase;
+      	font-size: 60px;
+      	line-height: .75;
+      	margin: 10px 0;
+      }
     }
 
     .categ {
+      padding: 20px;
+
       .title {
         margin-bottom: 10px;
       }
@@ -49,8 +88,12 @@ export default {
         .content {
           background-color: #2d3748;
           margin-bottom: 10px;
-          padding: 10px 15px;
+          padding: 12px 15px;
           border-radius: 4px;
+
+          &:hover, &:active {
+            background-color: #7C3AED;
+          }
         }
       }
     }
