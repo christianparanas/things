@@ -13,7 +13,7 @@
 					<div class="followers">10 Followers</div>
 				</div>
 		</div>
-		
+
 
 		<div class="userPosts">
 			<div class="posts-wrapper">
@@ -56,6 +56,7 @@
 
 <script>
 	export default {
+		transition: 'home',
 		data() {
 			return {
 				userPosts: [],
@@ -67,7 +68,7 @@
 			}
 		},
 		async asyncData({ params }) {
-			const userId = params.user			
+			const userId = params.user
 
 			return {
 				userId: userId
@@ -82,7 +83,7 @@
         this.userDetails = this.$fire.auth.currentUser
         	console.log(this.userDetails)
       	} else {
-        	this.$router.push('/auth/login')
+        	this.$router.push('/login')
       	}
     	})
   	},
@@ -91,7 +92,7 @@
   	},
 		mounted() {
 			this.updatesFire()
-			
+
 		},
 		methods: {
 			// update like on each post onclick
@@ -144,6 +145,9 @@
 
 
 <style lang="scss" scoped>
+	.home-enter-active, .home-leave-active { transition: opacity .3s; }
+  .home-enter, .home-leave-active { opacity: 0; }
+
 	.user-wrapper {
 
 		.back {
@@ -174,7 +178,7 @@
 
 			.img_wrapper {
 				height: 100px;
-				
+
 				img {
 					position: relative;
 					top: -130px;
@@ -286,5 +290,5 @@
     }
 		}
 	}
-	
+
 </style>

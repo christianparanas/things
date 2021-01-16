@@ -7,7 +7,7 @@
 		</NuxtLink>
 
 		<div class="users">
-			
+
 			<div class="title">Users</div>
 			<NuxtLink :to="toUserProfile(user.uid)" class="user" v-for="user in users" :key="user.uid">
 				<img :src="dynaImg(user.userPic)" alt="">
@@ -21,12 +21,23 @@
 
 <script>
 	export default {
+		transition: 'home',
 		data() {
 			return {
 				users: [],
 				fireDB: this.$fireModule.firestore(),
 			}
 		},
+		beforeCreate() {
+      		this.$fire.auth.onAuthStateChanged((user) => {
+      			if (user) {
+        			this.user = this.$fire.auth.currentUser
+        			console.log(this.$fire.auth)
+      			} else {
+        			this.$router.push('/login')
+      			}
+      		})
+    	},
 		mounted() {
 			this.fetchAllUsers()
 		},
@@ -42,7 +53,7 @@
           });
 
           console.log(this.users)
-          
+
         });
       },
       dynaImg(photo) {
@@ -55,6 +66,9 @@
 
 
 <style lang="scss" scoped>
+	.home-enter-active, .home-leave-active { transition: opacity .3s; }
+    .home-enter, .home-leave-active { opacity: 0; }
+
 	.users_container {
 		padding: 20px;
 

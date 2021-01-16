@@ -78,6 +78,7 @@ export default {
         cursor: pointer;
         display: flex;
         padding: 15px 25px;
+        border-radius: 4px;
 
         svg {
           margin-right: 10px;

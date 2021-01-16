@@ -31,17 +31,31 @@
 
 <script>
 	export default {
+		transition: 'home',
 		methods: {
 			sole() {
 				console.log('hi')
 			}
-		}
+		},
+		beforeCreate() {
+      		this.$fire.auth.onAuthStateChanged((user) => {
+      		if (user) {
+        		this.user = this.$fire.auth.currentUser
+        		console.log(this.$fire.auth)
+      		} else {
+        		this.$router.push('/login')
+      		}
+      	})
+    },
 	}
 </script>
 
 
 
 <style lang="scss" scoped>
+	.home-enter-active, .home-leave-active { transition: opacity .3s; }
+   .home-enter, .home-leave-active { opacity: 0; }
+
 	.convo-main-container {
 		padding: 20px;
 

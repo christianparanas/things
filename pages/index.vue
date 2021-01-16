@@ -7,7 +7,7 @@
       <div class="createClick">
         <img v-cloak :src="dynaImg(user.photoURL)" alt="">
         <div @click="showComposeWindow" class="openCreate shadow-md">What's on your mind?</div>
-<!--         
+<!--
          -->
       </div>
       <transition name="menuTrans">
@@ -26,7 +26,7 @@
 
     <div class="posts-wrapper">
       <hr>
-      <div class="post shadow" v-for="post in postsArr" :key="post.postId">
+      <div class="post shadow" v-for="post in postsArr" v-if="postsArr" :key="post.postId">
         <div class="post_details">
           <NuxtLink :to="dynaImg(post.uid)">
           <img :src="dynaImg(post.userPic)" alt="">
@@ -58,12 +58,14 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 </template>
 
 <script>
 export default {
+    transition: 'home',
+
     data() {
       return {
         user: '',
@@ -79,9 +81,6 @@ export default {
     mounted() {
        this.updatesFire()
        this.checkIfUserAlreadyInUsers()
-       // this.$store.commit('setUserDetails', {
-       //    userDetails: this.user
-       //  })
     },
     methods: {
       showComposeWindow() {
@@ -116,8 +115,6 @@ export default {
         .orderBy("postId", "desc")
         .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            // console.log(doc.data())
-            // console.log(doc.data().content.replace(/(?:\r\n|\r|\n)/g, '<br />'))
             this.postsArr.push(doc.data());
           });
 
@@ -126,6 +123,10 @@ export default {
             obj.content = obj.content.replace(/(?:\r\n|\r|\n)/g, '<br />')
           })
         });
+      },
+
+      updatePosts() {
+
       },
       // this will save the current user to the users collection, if they're not in collection yet
       saveUserInfo() {
@@ -164,7 +165,7 @@ export default {
         this.user = this.$fire.auth.currentUser
         console.log(this.$fire.auth)
       } else {
-        this.$router.push('/auth/login')
+        this.$router.push('/login')
       }
       })
     },
@@ -172,9 +173,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  
 
-  .main-container { 
+  .home-enter-active, .home-leave-active { transition: opacity .3s; }
+  .home-enter, .home-leave-active { opacity: 0; }
+
+
+  .main-container {
 
     .particle {
 
@@ -191,6 +195,10 @@ export default {
 
       hr {
         border-top: 1px solid #2d3748;
+      }
+
+      .postSkeleton {
+        background-color: #2d3748;
       }
 
       .post {

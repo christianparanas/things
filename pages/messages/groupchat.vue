@@ -24,19 +24,20 @@
 				<div class="se">Send</div>
 			</div>
 		</div>
-		
+
 	</div>
 </template>
 
 <script>
 	export default {
+		transition: 'home',
 		data() {
 			return {
 				user: [],
 				msg: "",
 				gcMessages: [],
 				fireRDB: this.$fireModule.database(),
-				line: null 
+				line: null
 			}
 		},
 		// run this if there's an update in the component
@@ -139,7 +140,7 @@
   		if (user) {
     		this.user = this.$fire.auth.currentUser
   		} else {
-    	this.$router.push('/auth/login')
+    	this.$router.push('/login')
   	}
   })
 },
@@ -148,6 +149,9 @@
 
 
 <style lang="scss" scoped>
+   .home-enter-active, .home-leave-active { transition: opacity .3s; }
+   .home-enter, .home-leave-active { opacity: 0; }
+
 	.msg-wrapper {
 		padding: 20px;
 
