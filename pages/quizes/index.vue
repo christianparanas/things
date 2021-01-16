@@ -2,11 +2,22 @@
   <div class="quizes">
     <Nav :user="user" />
     <div class="head">
-      <h1>OpenTDB</h1>
+      <h1>Questions</h1>
     </div>
     <div class="categ">
       <div class="title">
-        Categories
+        <div class="">Categories</div>
+        <div class="right">
+          <select class="">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+          <select class="">
+            <option value="choice">Multiple Choice</option>
+            <option value="truefalse">True or False</option>
+          </select>
+        </div>
       </div>
       <div class="content-container">
         <div class="content" v-for="category in categ.trivia_categories" :key="category.id">
@@ -54,7 +65,7 @@ export default {
     .head {
       font-size: 50px;
       font-weight: 700;
-      padding: 100px 0 20px;
+      padding: 100px 0 30px;
       text-align: center;
       color: #FFF;
       display: flex;
@@ -70,8 +81,8 @@ export default {
       	-moz-background-clip: text;
       	-webkit-background-clip: text;
       	text-transform: uppercase;
-      	font-size: 60px;
-      	line-height: .75;
+      	font-size: 50px;
+      
       	margin: 10px 0;
       }
     }
@@ -81,6 +92,18 @@ export default {
 
       .title {
         margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        .right {
+          display: flex;
+          justify-content: space-around;
+
+          & > select {
+            background-color: #7C3AED;
+            margin-left: 5px;
+          }
+        }
       }
 
       .content-container {
