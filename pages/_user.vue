@@ -2,7 +2,7 @@
 	<div class="user-wrapper">
 		<div class="userHero">
 			<div class="img_wrapper">
-				<vue-particles color="#dedede" :clickEffect="false"></vue-particles>
+
 				<img v-if="isCreLoad" :src="dynaImg(userCredential[0].userPic)" alt="waray">
 			</div>
 			<div class="userCre">
@@ -181,7 +181,7 @@
 
 				img {
 					position: relative;
-					top: -130px;
+					top: 70px;
 					margin: 0 auto;
 					border-radius: 50%;
 				}

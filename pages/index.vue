@@ -1,7 +1,9 @@
 <template>
   <div class="main-container">
     <Nav :user="user" />
-    <vue-particles class="particle" color="#dedede" :clickEffect="false"></vue-particles>
+    <div v-if="haveNewPost" class="refreshNewPosts" @click="tapNew">
+      Tap to load new posts!
+    </div>
 
     <div class="create">
       <div class="createClick">
@@ -47,7 +49,7 @@
         </div>
 <!--            {{ post.likes > 1 ? 'likes' : 'like' }} -->
         <div class="post_interact">
-          <div class="post_inter" @click="updateLikes(post.likes, post.postId)">
+          <div class="post_inter" @click="updateLikes(post.likes, post.postId); post.likes++">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
             <div class="post_in">Like</div>
           </div>
@@ -74,34 +76,28 @@ export default {
         userInput: '',
         postsNumberInFire: 0,
         showCompose: false,
+        haveNewPost: false
 
       }
     },
+    updated() {
+			console.log("new update dom")
+		},
     // fetch all data from users and call updates hint
+    created() {
+      this.updatesFire()
+    },
     mounted() {
-       this.updatesFire()
        this.checkIfUserAlreadyInUsers()
     },
     methods: {
+      tapNew() {
+        this.fetchAllPosts()
+        this.haveNewPost = false
+      },
       showComposeWindow() {
         this.showCompose = !this.showCompose
         // this.$refs.createPost.focus();
-      },
-      newPost() {
-        if(this.userInput) {
-          this.fireDB.collection("posts").doc(`${this.postsNumberInFire + 1}`).set({
-            postId: this.postsNumberInFire + 1,
-            uid: this.user.uid,
-            userPic: this.user.photoURL,
-            author: this.user.displayName,
-            content: this.userInput,
-            date: new Date().toLocaleString(),
-            likes: 0,
-          })
-
-          this.userInput = ''
-          this.showComposeWindow()
-        }
       },
       // update like on each post onclick
       updateLikes(prev, postId) {
@@ -124,9 +120,22 @@ export default {
           })
         });
       },
+      newPost() {
+        if(this.userInput) {
+          this.fireDB.collection("posts").doc(`${this.postsNumberInFire + 1}`).set({
+            postId: this.postsNumberInFire + 1,
+            uid: this.user.uid,
+            userPic: this.user.photoURL,
+            author: this.user.displayName,
+            content: this.userInput,
+            date: new Date().toLocaleString(),
+            likes: 0,
+          })
 
-      updatePosts() {
-
+          this.fetchAllPosts()
+          this.userInput = ''
+          this.showComposeWindow()
+        }
       },
       // this will save the current user to the users collection, if they're not in collection yet
       saveUserInfo() {
@@ -151,10 +160,17 @@ export default {
       },
       // call this function if there are new posts made by the other users
       updatesFire() {
+        console.log(this.postsArr.length)
         this.fireDB.collection("posts")
         .onSnapshot((doc) => {
+          console.log(doc)
+          if(doc.size !== this.postsArr.length) {
+            this.haveNewPost = true
+          } else {
+            this.haveNewPost = false
+          }
+
           this.postsNumberInFire = doc.size
-          this.fetchAllPosts()
         });
       },
     },
@@ -164,6 +180,7 @@ export default {
       if (user) {
         this.user = this.$fire.auth.currentUser
         console.log(this.$fire.auth)
+        this.fetchAllPosts()
       } else {
         this.$router.push('/login')
       }
@@ -177,12 +194,21 @@ export default {
   .home-enter-active, .home-leave-active { transition: opacity .3s; }
   .home-enter, .home-leave-active { opacity: 0; }
 
-
   .main-container {
 
-    .particle {
-
+    .refreshNewPosts {
+      position: fixed;
+      background-color: teal;
+      left: 0;
+      right: 0;
+      top: 70px;
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+      padding: 3px 10px;
+      border-radius: 4px;
     }
+
 
     -webkit-tap-highlight-color: transparent;
 
@@ -277,7 +303,7 @@ export default {
     }
 
     .create {
-      padding: 0 20px 20px;
+      padding: 100px 20px 20px;
 
       .menuTrans-enter-active, .menuTrans-leave-active {
         transition: opacity .5s;
