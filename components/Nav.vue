@@ -107,6 +107,7 @@
 		justify-content: space-between;
 		padding: 20px;
 		position: fixed;
+		z-index: 2;
 		width: 100%;
 		background-color: #1a202c;
 
@@ -117,7 +118,8 @@
 
 		.nav-menu {
 			background-color: #2d3748;
-			position: absolute;
+			position: relative;
+			z-index: 1;
 			top: 0;
 			right: 0;
 			width: 250px;
