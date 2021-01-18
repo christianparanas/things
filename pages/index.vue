@@ -11,7 +11,7 @@
         <img v-cloak :src="dynaImg(user.photoURL)" alt="">
         <div class="createWindow" >
           <div class="create_nav">
-            <div class="">Create Post</div>
+            <div class="">Write Post</div>
             <button class="" @click="newPost">Post</button>
               <textarea ref="createPost" v-model="userInput" placeholder="Write something" name="" cols="100%" rows="3"></textarea>
           </div>
@@ -36,9 +36,9 @@
               </NuxtLink>
             <div class="postDate">{{ post.date }}</div>
           </div>
-          <svg v-if="!postOp" @click="postOp = !postOp" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
-          <svg v-if="postOp" @click="postOp = !postOp" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-          <div class="postOptions" @click="deletePost(post.postId); fetchAllPosts()" v-if="postOp" :key="post.postId">
+          <svg v-if="!post.openCloseOpIcon" @click="post.openCloseDelButton = !post.openCloseDelButton; post.openCloseOpIcon = !post.openCloseOpIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+          <svg v-if="post.openCloseOpIcon" @click="post.openCloseDelButton = !post.openCloseDelButton; post.openCloseOpIcon = !post.openCloseOpIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          <div class="postOptions" @click="deletePost(post.postId); fetchAllPosts()" v-if="post.openCloseDelButton" :key="post.postId">
             <svg class="w-5 h-5" style="display: inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             Delete
           </div>
@@ -64,12 +64,10 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-
 export default {
     transition: 'home',
     data() {
@@ -93,6 +91,9 @@ export default {
        this.checkIfUserAlreadyInUsers()
     },
     methods: {
+      closeOpenSpecificOp(id) {
+        return this[id] = true
+      },
       closePostOp() {
         this.postOp = false
       },
@@ -150,6 +151,8 @@ export default {
             content: this.userInput,
             date: new Date().toLocaleString(),
             likes: 0,
+            openCloseDelButton: false,
+            openCloseOpIcon: false
           })
 
           this.fetchAllPosts()
@@ -263,14 +266,17 @@ export default {
         .post_details {
           display: grid;
           grid-template-columns: 60px 1fr 30px;
+          position: relative;
 
           svg {
+            margin-top: 5px;
             cursor: pointer;
           }
 
           .postOptions {
             position: absolute;
-            right: 70px;
+            top: 5px;
+            right: 45px;
             background-color: #ED5E68;
             border-radius: 4px;
             padding: 5px 10px;
@@ -350,11 +356,11 @@ export default {
               margin-left: 10px;
               margin-top: 3px;
               position: absolute;
-              right: -10px;
+              right: -12px;
             }
 
             .postLikes {
-              right: -14px;
+              right: -16px;
             }
 
             button {
