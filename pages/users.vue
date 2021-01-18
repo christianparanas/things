@@ -7,11 +7,10 @@
 		</NuxtLink>
 
 		<div class="users">
-
 			<div class="title">Users</div>
 			<NuxtLink :to="toUserProfile(user.uid)" class="user" v-for="user in users" :key="user.uid">
 				<img :src="dynaImg(user.userPic)" alt="">
-				<div class="name">{{ user.name }}</div>
+				<div class="name">{{ user.name }}<div v-if="user.role == 'admin' ? true: false" class="adminBadge">admin</div></div>
 			</NuxtLink>
 		</div>
 
@@ -51,9 +50,6 @@
           querySnapshot.forEach((doc) => {
             this.users.push(doc.data());
           });
-
-          console.log(this.users)
-
         });
       },
       dynaImg(photo) {
@@ -62,8 +58,6 @@
 		}
 	}
 </script>
-
-
 
 <style lang="scss" scoped>
 	.home-enter-active, .home-leave-active { transition: opacity .3s; }
@@ -91,18 +85,27 @@
 
 			.user {
 				display: flex;
-				background-color: #2d3748;
+				border: 2px solid #2d3748;
 				margin-bottom: 10px;
 				padding: 10px;
 				border-radius: 6px;
 
 				img {
-					width: 50px;
+					width: 40px;
+					height: 40px;
 					border-radius: 50%;
 				}
 
 				.name {
-					margin: 12px 0 0 10px;
+					margin: 0 0 0 10px;
+
+					.adminBadge {
+						font-size: 10px;
+						background-color: #7C3AED;
+						width: fit-content;
+						padding: 1px 5px;
+						border-radius: 4px;
+					}
 				}
 			}
 		}

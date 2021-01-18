@@ -162,17 +162,19 @@ export default {
       },
       // this will save the current user to the users collection, if they're not in collection yet
       saveUserInfo() {
-        this.fireDB.collection("users").doc(`${this.user.displayName}`).set({
+        this.fireDB.collection("users").doc(this.user.displayName).set({
           uid: this.user.uid,
           userPic: this.user.photoURL,
           name: this.user.displayName,
+          role: `${this.user.email === 'christiannparanas@gmail.com' ? 'admin': 'user'}`
         })
       },
       // check if user is already in users collection, if not add them
       checkIfUserAlreadyInUsers() {
         this.fireDB.collection("users")
-        .get(this.user.displayName)
+        .doc(`${this.user.displayName}`).get()
         .then(doc => {
+          console.log(doc)
           if(!doc.exists) {
             this.saveUserInfo()
           }
@@ -183,16 +185,13 @@ export default {
       },
       // call this function if there are new posts made by the other users
       updatesFire() {
-        console.log(this.postsArr.length)
         this.fireDB.collection("posts")
         .onSnapshot((doc) => {
-          console.log(doc)
           if(doc.size !== this.postsArr.length) {
             this.haveNewPost = true
           } else {
             this.haveNewPost = false
           }
-
           this.postsNumberInFire = doc.size
         });
       },
@@ -202,7 +201,6 @@ export default {
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
-        console.log(this.user)
         this.fetchAllPosts()
       } else {
         this.$router.push('/login')
