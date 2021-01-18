@@ -118,8 +118,8 @@
 
 		.nav-menu {
 			background-color: #2d3748;
-			position: relative;
-			z-index: 1;
+			position: fixed;
+			z-index: 10;
 			top: 0;
 			right: 0;
 			width: 250px;

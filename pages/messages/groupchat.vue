@@ -19,10 +19,7 @@
 		</div>
 		<div class="reply">
 			<textarea name="" id="" cols="100%" v-model="msg" rows="3" placeholder="Write something"></textarea>
-			<div class="send shadow"  @click="sendData">
-				<svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12.001,1.993C6.486,1.994,2,6.48,2,11.994c0.001,5.514,4.487,10,10,10c5.515,0,10.001-4.486,10.001-10 S17.515,1.994,12.001,1.993z M12,19.994c-4.41,0-7.999-3.589-8-8c0-4.411,3.589-8,8.001-8.001c4.411,0.001,8,3.59,8,8.001 S16.412,19.994,12,19.994z"></path><path d="M12.001 8.001L7.996 12.006 11.001 12.006 11.001 16 13.001 16 13.001 12.006 16.005 12.006z"></path></svg>
-				<div class="se">Send</div>
-			</div>
+			<svg @click="sendData" class="w-10 h-10" fill="#E74D89" stroke="#B2215A" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 		</div>
 
 	</div>
@@ -207,38 +204,26 @@
 		.reply {
 			display: grid;
 			margin-top: 5px;
+			position: relative;
 
 			textarea {
 				outline: none;
 				background-color: #2d3748;
 				color: #fff;
 			 	font-size: 12px;
-        padding: 10px;
+        padding: 10px 50px 10px 10px;
         word-wrap: break-word;
         border: none;
-        border-radius: 3px;
+        border-radius: 5px;
         margin-bottom: 5px;
         height: 60px;
-        resize: none;
 			}
 
-			.send {
-				padding: 10px;
-				background-color: #c83b50;
-				height: 50px;
-				border-radius: 3px;
-				display: flex;
-				justify-content: center;
-				border: none;
-
-				svg {
-					fill: #fff;
-					margin-right: 5px;
-				}
-
-				.se {
-					margin-top: 4px;
-				}
+			svg {
+				margin-right: 5px;
+				position: absolute;
+				top: 12px;
+				right: 8px;
 			}
 		}
 
