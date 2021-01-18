@@ -37,8 +37,9 @@
             <div class="postDate">{{ post.date }}</div>
           </div>
           <svg @click="postOp = !postOp" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
-          <div class="postOptions" v-if="postOp" v-click-outside="closePostOp" :key="post.postId">
-            <button @click="deletePost(post.postId); fetchAllPosts()" class="">Delete</button>
+          <div class="postOptions" @click="deletePost(post.postId); fetchAllPosts()" v-if="postOp" v-click-outside="closePostOp" :key="post.postId">
+            <svg class="w-5 h-5" style="display: inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            Delete
           </div>
         </div>
 
@@ -273,14 +274,14 @@ export default {
 
           .postOptions {
             position: absolute;
-            background-color: #7C3AED;
+            background-color: #ED5E68;
             right: 25px;
             border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
 
-            button {
-              padding: 5px 10px;
-              cursor: pointer;
-              outline: none;
+            svg {
+              margin-bottom: 2px;
             }
           }
 
