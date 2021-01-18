@@ -21,6 +21,7 @@
       </div>
       <div class="content-container">
         <div class="content" v-for="category in categ.trivia_categories" :key="category.id">
+          <svg class="w-5 h-5" style="display: inline-block" fill="none" stroke="gray" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"></path></svg>
           {{ category.name }}
         </div>
       </div>
@@ -82,7 +83,6 @@ export default {
       	-webkit-background-clip: text;
       	text-transform: uppercase;
       	font-size: 50px;
-
       	margin: 10px 0;
       }
     }
@@ -114,7 +114,7 @@ export default {
         .content {
           background-color: #2d3748;
           margin-bottom: 10px;
-          padding: 12px 15px;
+          padding: 12px;
           border-radius: 4px;
 
           &:hover, &:active {

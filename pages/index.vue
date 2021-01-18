@@ -22,10 +22,13 @@
     <div class="posts-wrapper">
       <h1>Feed</h1>
       <hr>
+      <div class="" v-if="postsArr.length > 0 ? false: true">
+        No Posts!
+      </div>
       <div class="post shadow" v-for="post in postsArr" v-if="postsArr" :key="post.postId">
         <div class="post_details">
           <NuxtLink :to="dynaImg(post.uid)">
-          <img :src="dynaImg(post.userPic)" alt="">
+            <img :src="dynaImg(post.userPic)" alt="">
           </NuxtLink>
           <div class="postLink">
               <NuxtLink :to="dynaImg(post.uid)" class="author">{{ post.author }}
@@ -33,7 +36,10 @@
               </NuxtLink>
             <div class="postDate">{{ post.date }}</div>
           </div>
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+          <svg @click="postOp = !postOp" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+          <div class="postOptions" v-if="postOp" v-click-outside="closePostOp" :key="post.postId">
+            <button @click="deletePost(post.postId); fetchAllPosts()" class="">Delete</button>
+          </div>
         </div>
 
         <div class="content" v-html="post.content"></div>
@@ -61,9 +67,13 @@
 </template>
 
 <script>
+import vClickOutside from 'v-click-outside'
+
 export default {
     transition: 'home',
-
+    directives: {
+      clickOutside: vClickOutside.directive
+    },
     data() {
       return {
         user: '',
@@ -72,7 +82,8 @@ export default {
         userInput: '',
         postsNumberInFire: 0,
         showCompose: false,
-        haveNewPost: false
+        haveNewPost: false,
+        postOp: false
 
       }
     },
@@ -87,6 +98,9 @@ export default {
        this.checkIfUserAlreadyInUsers()
     },
     methods: {
+      closePostOp() {
+        this.postOp = false
+      },
       tapNew() {
         this.fetchAllPosts()
         this.haveNewPost = false
@@ -115,6 +129,19 @@ export default {
             obj.content = obj.content.replace(/(?:\r\n|\r|\n)/g, '<br />')
           })
         });
+      },
+      deletePost(postId) {
+        if(this.user.email == "christiannparanas@gmail.com") {
+          this.fireDB.collection("posts").doc(`${postId}`).delete()
+          .then(function() {
+              console.log("Document successfully deleted!");
+          })
+          .catch(function(error) {
+              console.error("Error removing document: ", error);
+          });
+        } else {
+          alert('Please contact the admin to delete this post, thank you!')
+        }
       },
       newPost() {
         if(this.userInput) {
@@ -175,7 +202,7 @@ export default {
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
-        console.log(this.$fire.auth)
+        console.log(this.user)
         this.fetchAllPosts()
       } else {
         this.$router.push('/login')
@@ -235,9 +262,27 @@ export default {
         background-color: #2d3748;
         border-radius: 5px;
 
+
         .post_details {
           display: grid;
           grid-template-columns: 60px 1fr 30px;
+
+          svg {
+            cursor: pointer;
+          }
+
+          .postOptions {
+            position: absolute;
+            background-color: #7C3AED;
+            right: 25px;
+            border-radius: 4px;
+
+            button {
+              padding: 5px 10px;
+              cursor: pointer;
+              outline: none;
+            }
+          }
 
           img {
             margin: 10px;
@@ -305,6 +350,11 @@ export default {
             .postLikes, .postComments, .postShares {
               font-size: 10px;
               margin-left: 10px;
+              margin-top: 3px;
+            }
+
+            .postLikes {
+              margin-left: 15px;
             }
 
             button {
