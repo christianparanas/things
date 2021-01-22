@@ -13,7 +13,7 @@
 
 <style>
 body {
-  background-color: #1a202c;
+  background-color: #15202B;
   color: #fff;
 }
 

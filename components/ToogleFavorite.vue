@@ -48,7 +48,7 @@ export default {
 $particles-animation-duration: 0.8s;
 $icon-animation-duration: 0.48s;
 $icon-color: #C32361;
-$icon-border-color: #fff;
+$icon-border-color: #73838F;
 
 @keyframes favorite-icon-animation {
   0% {

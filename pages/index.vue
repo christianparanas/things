@@ -5,27 +5,17 @@
       <svg class="w-6 h-6" style="display: inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
       Tap to load updates!
     </div>
-
-    <div class="create">
-      <div class="createClick">
-        <img v-cloak :src="dynaImg(user.photoURL)" alt="">
-        <div class="createWindow" >
-          <div class="create_nav">
-            <div class="">Write Post</div>
-            <button class="" @click="newPost">Post</button>
-              <textarea ref="createPost" v-model="userInput" placeholder="Write something" name="" cols="100%" rows="3"></textarea>
-          </div>
-        </div>
-      </div>
+    <NuxtLink to="compose">
+    <div class="createBtn shadow">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8.8 7.2H5.6V3.9c0-.4-.3-.8-.8-.8s-.7.4-.7.8v3.3H.8c-.4 0-.8.3-.8.8s.3.8.8.8h3.3v3.3c0 .4.3.8.8.8s.8-.3.8-.8V8.7H9c.4 0 .8-.3.8-.8s-.5-.7-1-.7zm15-4.9v-.1h-.1c-.1 0-9.2 1.2-14.4 11.7-3.8 7.6-3.6 9.9-3.3 9.9.3.1 3.4-6.5 6.7-9.2 5.2-1.1 6.6-3.6 6.6-3.6s-1.5.2-2.1.2c-.8 0-1.4-.2-1.7-.3 1.3-1.2 2.4-1.5 3.5-1.7.9-.2 1.8-.4 3-1.2 2.2-1.6 1.9-5.5 1.8-5.7z"></path></svg>
     </div>
+    </NuxtLink>
 
     <div class="posts-wrapper">
-      <h1>Feed</h1>
-      <hr>
       <div class="" v-if="postsArr.length > 0 ? false: true">
         No Posts!
       </div>
-      <div class="post shadow" v-for="post in postsArr" v-if="postsArr" :key="post.postId">
+      <div class="post" v-for="post in postsArr" v-if="postsArr" :key="post.postId">
         <div class="post_details">
           <NuxtLink :to="dynaImg(post.uid)">
             <img :src="dynaImg(post.userPic)" alt="">
@@ -48,17 +38,21 @@
 <!--            {{ post.likes > 1 ? 'likes' : 'like' }} -->
         <div class="post_interact">
           <div class="post_inter">
+            <svg class="w-6 h-6" fill="#fff" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" ><path d="M14.046 2.242l-4.148-.01h-.002c-4.374 0-7.8 3.427-7.8 7.802 0 4.098 3.186 7.206 7.465 7.37v3.828c0 .108.044.286.12.403.142.225.384.347.632.347.138 0 .277-.038.402-.118.264-.168 6.473-4.14 8.088-5.506 1.902-1.61 3.04-3.97 3.043-6.312v-.017c-.006-4.367-3.43-7.787-7.8-7.788zm3.787 12.972c-1.134.96-4.862 3.405-6.772 4.643V16.67c0-.414-.335-.75-.75-.75h-.396c-3.66 0-6.318-2.476-6.318-5.886 0-3.534 2.768-6.302 6.3-6.302l4.147.01h.002c3.532 0 6.3 2.766 6.302 6.296-.003 1.91-.942 3.844-2.514 5.176z"></path></svg>
+            <div class="postComments" v-if="post.likes">{{ post.likes }}</div>
+          </div>
+          <div class="post_inter">
+            <svg class="w-6 h-6" fill="none"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"></path></svg>
+            <div class="postShares" v-if="post.likes">{{ post.likes }}</div>
+          </div>
+          <div class="post_inter">
             <div @click="updateLikes(post.likes, post.postId); post.likes++">
               <ToogleFavorite />
             </div>
             <div class="postLikes" v-if="post.likes">{{ post.likes }}</div>
           </div>
           <div class="post_inter">
-            <svg class="w-6 h-6" fill="#fff" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" ><path d="M12,2C6.486,2,2,5.589,2,10c0,2.908,1.898,5.516,5,6.934V22l5.34-4.005C17.697,17.852,22,14.32,22,10 C22,5.589,17.514,2,12,2z M12,16h-0.333L9,18v-2.417l-0.641-0.247C5.67,14.301,4,12.256,4,10c0-3.309,3.589-6,8-6s8,2.691,8,6 C20,13.309,16.411,16,12,16z"></path></svg>
-            <div class="postComments" v-if="post.likes">{{ post.likes }}</div>
-          </div>
-          <div class="post_inter">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+            <svg class="w-6 h-6" fill="none"  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.77 15.67c-.292-.293-.767-.293-1.06 0l-2.22 2.22V7.65c0-2.068-1.683-3.75-3.75-3.75h-5.85c-.414 0-.75.336-.75.75s.336.75.75.75h5.85c1.24 0 2.25 1.01 2.25 2.25v10.24l-2.22-2.22c-.293-.293-.768-.293-1.06 0s-.294.768 0 1.06l3.5 3.5c.145.147.337.22.53.22s.383-.072.53-.22l3.5-3.5c.294-.292.294-.767 0-1.06zm-10.66 3.28H7.26c-1.24 0-2.25-1.01-2.25-2.25V6.46l2.22 2.22c.148.147.34.22.532.22s.384-.073.53-.22c.293-.293.293-.768 0-1.06l-3.5-3.5c-.293-.294-.768-.294-1.06 0l-3.5 3.5c-.294.292-.294.767 0 1.06s.767.293 1.06 0l2.22-2.22V16.7c0 2.068 1.683 3.75 3.75 3.75h5.85c.414 0 .75-.336.75-.75s-.337-.75-.75-.75z"></path></svg>
             <div class="postShares" v-if="post.likes">{{ post.likes }}</div>
           </div>
         </div>
@@ -141,25 +135,6 @@ export default {
           alert('Please contact the admin to delete this post, thank you!')
         }
       },
-      newPost() {
-        if(this.userInput) {
-          this.fireDB.collection("posts").doc(`${this.postsNumberInFire + 1}`).set({
-            postId: this.postsNumberInFire + 1,
-            uid: this.user.uid,
-            userPic: this.user.photoURL,
-            author: this.user.displayName,
-            content: this.userInput,
-            date: new Date().toLocaleString(),
-            likes: 0,
-            openCloseDelButton: false,
-            openCloseOpIcon: false
-          })
-
-          this.fetchAllPosts()
-          this.userInput = ''
-          this.showComposeWindow()
-        }
-      },
       // this will save the current user to the users collection, if they're not in collection yet
       saveUserInfo() {
         this.fireDB.collection("users").doc(this.user.displayName).set({
@@ -212,10 +187,24 @@ export default {
 
 <style lang="scss" scoped>
 
+
   .home-enter-active, .home-leave-active { transition: opacity .3s; }
   .home-enter, .home-leave-active { opacity: 0; }
 
   .main-container {
+
+    .createBtn {
+      position: fixed;
+      bottom: 40px;
+      right: 20px;
+      background-color: teal;
+      padding: 20px;
+      border-radius: 50%;
+
+      svg {
+        fill: #fff;
+      }
+    }
 
     .refreshNewPosts {
       position: fixed;
@@ -239,26 +228,24 @@ export default {
     }
 
     .posts-wrapper {
-      padding: 10px 20px 40px;
+      padding: 70px 0;
 
       h1 {
         font-size: 20px;
         margin-bottom: 5px;
       }
 
-      hr {
-        border-top: 1px solid #2d3748;
-      }
-
       .postSkeleton {
         background-color: #2d3748;
       }
 
+      .borderBottom {
+        border-top: 1px solid #73838F;
+      }
+
       .post {
-        margin: 12px 0 0;
         padding: 5px 5px 0;
-        background-color: #2d3748;
-        border-radius: 5px;
+        border-bottom: 1px solid #73838F;
 
 
         .post_details {
@@ -339,7 +326,7 @@ export default {
           margin: 0 5px 0;
           padding: 10px 20px;
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
 
           .post_inter {
             font-size: 13px;
@@ -348,6 +335,10 @@ export default {
             margin: 0 auto;
             cursor: pointer;
             position: relative;
+
+            svg {
+              fill: #73838F;
+            }
 
             .postLikes, .postComments, .postShares {
               font-size: 10px;
@@ -379,83 +370,6 @@ export default {
               margin-right: 5px;
             }
           }
-        }
-      }
-    }
-
-    .create {
-      padding: 100px 20px 20px;
-
-      .menuTrans-enter-active, .menuTrans-leave-active {
-        transition: opacity .5s;
-      }
-
-      .createWindow {
-        position: relative;
-        z-index: 1;
-        background-color: #1a202c;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        padding: 0 0 20px 10px;
-
-        .create_nav {
-          display: grid;
-          border-bottom: 1px solid #2d3748;
-          padding-bottom: 10px;
-          grid-template-columns: 1fr 1fr;
-
-          button {
-            width: fit-content;
-            place-self: end;
-            border-radius: 4px;
-            background-color: #7C3AED;
-            padding: 2px 15px;
-            outline: none;
-          }
-
-
-          img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-          }
-
-
-          textarea {
-            grid-column: 1 / span 3;
-            padding: 10px 15px;
-            outline: none;
-            border: 0;
-            border-radius: 5px;
-            background-color: #2d3748;
-            width:100%;
-            margin-top: 10px;
-          }
-        }
-      }
-
-      .createClick {
-        margin-top: 60px;
-        display: flex;
-
-        .openCreate {
-          font-size: 11px;
-          width: 100%;
-          padding: 11px 15px 10px;
-          outline: none;
-          border: 0;
-          border-radius: 5px;
-          background-color: #2d3748;
-        }
-
-        img {
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
         }
       }
     }
