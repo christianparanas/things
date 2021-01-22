@@ -8,7 +8,7 @@
     </div>
     <div class="createInterface">
       <img v-cloak :src="dynaImg(user.photoURL)" alt="">
-      <textarea ref="createPost" v-model="userInput" placeholder="Write something" name="" cols="100%" rows="5"></textarea>
+      <textarea ref="createPost" v-model="userInput" placeholder="What's in your mind?" name="" cols="100%" rows="5"></textarea>
     </div>
   </div>
 </template>
@@ -74,7 +74,7 @@
       .op {
         display: flex;
         justify-content: space-between;
-        border-bottom: 1px solid #73838F;
+        border-bottom: 1px solid #2d3748;
         padding: 15px 20px;
 
         button {
@@ -86,7 +86,7 @@
       }
 
       .createInterface {
-        padding: 10px 0px 10px 20px;
+        padding: 20px 0px 10px 20px;
         display: grid;
         grid-template-columns: 55px 1fr;
 
@@ -96,7 +96,7 @@
 
         textarea {
           background-color: transparent;
-          border-bottom: 1px solid #73838F;
+          border-bottom: 1px solid #2d3748;
           margin: 15px 20px;
           outline: 0;
         }

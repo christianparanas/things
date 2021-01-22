@@ -31,7 +31,9 @@
       		this.$fire.auth.onAuthStateChanged((user) => {
       			if (user) {
         			this.user = this.$fire.auth.currentUser
-        			console.log(this.$fire.auth)
+        			// if(this.user.email !== "christiannparanas@gmail.com") {
+        			// 	this.$router.push('/')
+        			// }
       			} else {
         			this.$router.push('/login')
       			}
@@ -85,7 +87,7 @@
 
 			.user {
 				display: flex;
-				border: 2px solid #2d3748;
+				background-color: #192734;
 				margin-bottom: 10px;
 				padding: 10px;
 				border-radius: 6px;
