@@ -133,7 +133,7 @@
 
             .postDate {
               font-size: 8px;
-              top: 40px;
+              top: 35px;
               left: 65px;
             }
 
@@ -151,7 +151,7 @@
 
         .content {
           font-size: 12px;
-          padding: 0 10px;
+          padding: 0 10px 0 60px;
           margin: 10px 0;
           word-wrap: break-word;
           margin-bottom: 10px;
@@ -172,15 +172,15 @@
 
         .post_interact {
           margin: 0 5px 0;
-          padding: 10px 20px;
+          padding: 10px 0 10px 53px;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;
+          place-items: left;
 
           .post_inter {
             font-size: 13px;
             display: flex;
             width: fit-content;
-            margin: 0 auto;
             cursor: pointer;
             position: relative;
 
