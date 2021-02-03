@@ -1,7 +1,7 @@
 <template>
 	<div class="convo-main-container">
 		<div class="title">
-			<svg class="w-10 h-10 shadow-md" xmlns="http://www.w3.org/2000/svg" height="226px" width="224px" version="1.1" viewBox="0 0 224 226">
+			<svg class="w-8 h-8 shadow-md" xmlns="http://www.w3.org/2000/svg" height="226px" width="224px" version="1.1" viewBox="0 0 224 226">
 				<defs>
 					<linearGradient id="a" y1="6.76%" x2="50%" x1="50%" y2="95.6%">
 						<stop stop-color="#00C6FF" offset="0"/>
@@ -11,7 +11,7 @@
 			<path fill="url(#a)" d="m41.255 185.52v40.2l37.589-21.37c10.478 3.02 21.616 4.65 33.156 4.65 61.86 0 112-46.79 112-104.5 0-57.714-50.14-104.5-112-104.5-61.856 0-112 46.786-112 104.5 0 32.68 16.078 61.86 41.255 81.02z"/>
 				<path fill="#fff" d="m100.04 75.878l-60.401 63.952 54.97-30.16 28.721 30.16 60.06-63.952-54.36 29.632-28.99-29.632z"/>
 			</svg>
-			<div class="tit">Messenger</div>
+			<div class="tit">Messages</div>
 		</div>
 		<NuxtLink to="/">
 			<div class="back">
@@ -22,7 +22,9 @@
 		<div class="convo-container">
 			<NuxtLink to="/messages/groupchat" @click="sole" class="convo">
 				<img class="shadow-md" src="https://avatars.dicebear.com/4.5/api/initials/Member's%20Chatbox.svg" alt="">
-				<div class="name">Member's Chatbox</div>
+				<div class="name">Members Chatbox</div>
+				<div class="recentmsg" v-if="!recent">Loading...</div>
+				<div class="recentmsg" v-if="recent">{{ recent.name }}: {{ recent.message }}</div>
 			</NuxtLink>
 		</div>
 
@@ -32,10 +34,48 @@
 <script>
 	export default {
 		transition: 'home',
+		data() {
+			return {
+				gcMessages: [],
+				recent: [],
+				fireRDB: this.$fireModule.database(),
+			}
+		},
+		mounted() {
+			this.fetchGCchats()
+		},
 		methods: {
+			recentMsg() {
+				this.recent = this.gcMessages[this.gcMessages.length -1 ]
+			},
 			sole() {
 				console.log('hi')
-			}
+			},
+			fetchGCchats() {
+				let msgRef = this.fireRDB.ref("Messages")
+				msgRef.child("MembersChatroom").on("value", (snapshot) => {
+					let list = []
+
+					for(let chat in snapshot.val()) {
+						let obj = {
+		          id: chat,
+		          userId: snapshot.val()[chat].userId,
+		          name: snapshot.val()[chat].name,
+		          message: snapshot.val()[chat].message,
+		          date: snapshot.val()[chat].date,
+		          time: snapshot.val()[chat].time,
+		          img: snapshot.val()[chat].img
+		        };
+		        list.push(obj)
+					}
+					this.gcMessages = list
+					this.gcMessages.forEach(obj =>  {
+            obj.message = obj.message.replace(/(?:\r\n|\r|\n)/g, '<br />')
+         })
+				})
+				this.recentMsg()
+				console.log(this.gcMessages)
+			},
 		},
 		beforeCreate() {
       		this.$fire.auth.onAuthStateChanged((user) => {
@@ -87,17 +127,25 @@
 
 			.convo {
 				padding: 15px 10px;
-				background-color: #2d3748;
 				border-radius: 12px;
 				display: flex;
+				position: relative;
 
 				img {
-					width: 40px;
+					width: 35px;
 					border-radius: 50%;
 				}
 
+				.recentmsg {
+					position: absolute;
+					font-size: 10px;
+					bottom: 13px;
+					left: 57px;
+					color: #73838F;
+				}
+
 				.name {
-					margin: 9px 0 0 10px;
+					margin: 0px 0 0 10px;
 				}
 			}
 		}
