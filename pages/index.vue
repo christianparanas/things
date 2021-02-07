@@ -43,16 +43,22 @@ export default {
         indexSkeleton: [1, 2, 3, 4, 5],
       }
     },
+    destroyed() {
+      console.log("destroyed")
+      this.onlineOffline(this.user.displayName)
+    },
     updated() {
 			console.log("new update dom")
       this.updatesFire()
 		},
     // fetch all data from users and call updates hint
     mounted() {
-
        this.checkIfUserAlreadyInUsers()
     },
     methods: {
+      onlineOffline(name) {
+        this.fireDB.collection("users").doc(`${name}`).update({isOnline: false});
+      },
       closeOpenSpecificOp(id) {
         return this[id] = true
       },
@@ -94,7 +100,8 @@ export default {
           uid: this.user.uid,
           userPic: this.user.photoURL,
           name: this.user.displayName,
-          role: `${this.user.email === 'christiannparanas@gmail.com' ? 'admin': 'user'}`
+          role: `${this.user.email === 'christiannparanas@gmail.com' ? 'admin': 'user'}`,
+          isOnline: true
         })
       },
       // check if user is already in users collection, if not add them
@@ -126,9 +133,13 @@ export default {
     },
     // before create check if user is authenticated
     beforeCreate() {
+
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
+        window.onbeforeunload = (e) => {
+          this.onlineOffline(this.user.displayName)
+        }
         this.fetchAllPosts()
       } else {
         this.$router.push('/login')

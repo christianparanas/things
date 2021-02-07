@@ -11,6 +11,7 @@
 			<NuxtLink :to="toUserProfile(user.uid)" class="user" v-for="user in users" :key="user.uid">
 				<img :src="dynaImg(user.userPic)" alt="">
 				<div class="name">{{ user.name }}<div v-if="user.role == 'admin' ? true: false" class="adminBadge">admin</div></div>
+				<div class="isOnline" v-if="user.isOnline"><div class="isOn"></div></div>
 			</NuxtLink>
 		</div>
 
@@ -23,6 +24,7 @@
 		transition: 'home',
 		data() {
 			return {
+				user: '',
 				users: [],
 				fireDB: this.$fireModule.firestore(),
 			}
@@ -31,18 +33,29 @@
       		this.$fire.auth.onAuthStateChanged((user) => {
       			if (user) {
         			this.user = this.$fire.auth.currentUser
-        			// if(this.user.email !== "christiannparanas@gmail.com") {
-        			// 	this.$router.push('/')
-        			// }
+        			this.online(this.user.displayName)
       			} else {
         			this.$router.push('/login')
       			}
       		})
     	},
+    	created() {
+    		
+    	},
+    	destroyed() {
+    		this.offline(this.user.displayName)
+    	},
 		mounted() {
 			this.fetchAllUsers()
+			console.log(this.user)
 		},
 		methods: {
+			offline(name) {
+				this.fireDB.collection("users").doc(`${name}`).update({isOnline: false});
+			},
+			online(name) {
+        this.fireDB.collection("users").doc(`${name}`).update({isOnline: true});
+      },
 			toUserProfile(url) {
 				return url
 			},
@@ -91,7 +104,25 @@
 				margin-bottom: 10px;
 				padding: 10px;
 				border-radius: 6px;
+				position: relative;
 
+				.isOnline {
+					position: absolute;
+					top: 38px;
+					left: 35px;
+					padding: 2px;
+					border-radius: 50%;
+					background-color: #192734;
+					
+					.isOn {
+						width: 10px;
+						height: 10px;
+						background-color: #31A24C;
+						border-radius: 50%;
+						outline-color: #ffffff;
+					}
+				}
+ 
 				img {
 					width: 40px;
 					height: 40px;
