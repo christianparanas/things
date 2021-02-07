@@ -8,10 +8,10 @@
 
 		<div class="users" v-if="user">
 			<div class="title">Users</div>
-			<NuxtLink :to="toUserProfile(user.uid)" class="user" v-for="user in users" :key="user.uid">
-				<img :src="dynaImg(user.userPic)" alt="">
-				<div class="name">{{ user.name }}<div v-if="user.role == 'admin' ? true: false" class="adminBadge">admin</div></div>
-				<div class="isOnline" v-if="user.isOnline"><div class="isOn"></div></div>
+			<NuxtLink v-if="user.uid != use.uid" :to="toUserProfile(use.uid)" class="user" v-for="use in users" :key="use.uid">
+				<img :src="dynaImg(use.userPic)" alt="">
+				<div class="name">{{ use.name }}<div v-if="use.role == 'admin' ? true: false" class="adminBadge">admin</div></div>
+				<div class="isOnline" v-if="use.isOnline"><div class="isOn"></div></div>
 			</NuxtLink>
 		</div>
 
@@ -39,9 +39,6 @@
       			}
       		})
     	},
-    	updated() {
-    		
-    	},
     	destroyed() {
     		this.offline(this.user.displayName)
     	},
@@ -49,14 +46,9 @@
 			this.fetchAllUsers()
 			this.forceOff()
 			this.updatesFire()
+			
 		},
 		methods: {
-			forceOff() {
-        setTimeout(() => {
-          this.onlineOffline(this.user.displayName)
-          console.log('offline')
-        }, 60000)
-      },
 			offline(name) {
 				this.fireDB.collection("users").doc(`${name}`).update({isOnline: false});
 			},
@@ -66,8 +58,13 @@
 			toUserProfile(url) {
 				return url
 			},
+			forceOff() {
+        setTimeout(() => {
+          this.offline(this.user.displayName)
+        }, 60000)
+      },
 			fetchAllUsers() {
-				this.users = []
+				
         this.fireDB.collection("users")
         .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -81,7 +78,7 @@
       updatesFire() {
         this.fireDB.collection("users")
         .onSnapshot((doc) => {
-          this.fetchAllUsers()
+          
         });
       },
 		}

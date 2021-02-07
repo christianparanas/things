@@ -44,7 +44,6 @@ export default {
       }
     },
     destroyed() {
-      console.log("destroyed")
       this.onlineOffline(this.user.displayName)
     },
     updated() {
@@ -78,7 +77,7 @@ export default {
         setTimeout(() => {
           this.onlineOffline(this.user.displayName)
           console.log('offline')
-        }, 60000)
+        }, 20000)
       },
       // update like on each post onclick
       
