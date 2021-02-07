@@ -6,7 +6,7 @@
 			</div>
 		</NuxtLink>
 
-		<div class="users">
+		<div class="users" v-if="user">
 			<div class="title">Users</div>
 			<NuxtLink :to="toUserProfile(user.uid)" class="user" v-for="user in users" :key="user.uid">
 				<img :src="dynaImg(user.userPic)" alt="">
@@ -39,7 +39,7 @@
       			}
       		})
     	},
-    	created() {
+    	updated() {
     		
     	},
     	destroyed() {
@@ -47,9 +47,16 @@
     	},
 		mounted() {
 			this.fetchAllUsers()
-			console.log(this.user)
+			this.forceOff()
+			this.updatesFire()
 		},
 		methods: {
+			forceOff() {
+        setTimeout(() => {
+          this.onlineOffline(this.user.displayName)
+          console.log('offline')
+        }, 60000)
+      },
 			offline(name) {
 				this.fireDB.collection("users").doc(`${name}`).update({isOnline: false});
 			},
@@ -60,6 +67,7 @@
 				return url
 			},
 			fetchAllUsers() {
+				this.users = []
         this.fireDB.collection("users")
         .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -69,6 +77,12 @@
       },
       dynaImg(photo) {
         return photo
+      },
+      updatesFire() {
+        this.fireDB.collection("users")
+        .onSnapshot((doc) => {
+          this.fetchAllUsers()
+        });
       },
 		}
 	}

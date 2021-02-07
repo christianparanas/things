@@ -54,6 +54,7 @@ export default {
     // fetch all data from users and call updates hint
     mounted() {
        this.checkIfUserAlreadyInUsers()
+       this.forceOff()
     },
     methods: {
       onlineOffline(name) {
@@ -72,6 +73,12 @@ export default {
       showComposeWindow() {
         this.showCompose = !this.showCompose
         // this.$refs.createPost.focus();
+      },
+      forceOff() {
+        setTimeout(() => {
+          this.onlineOffline(this.user.displayName)
+          console.log('offline')
+        }, 60000)
       },
       // update like on each post onclick
       
