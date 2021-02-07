@@ -30,23 +30,24 @@
 			}
 		},
 		beforeCreate() {
-      		this.$fire.auth.onAuthStateChanged((user) => {
-      			if (user) {
-        			this.user = this.$fire.auth.currentUser
-        			this.online(this.user.displayName)
-      			} else {
-        			this.$router.push('/login')
-      			}
-      		})
+  		this.$fire.auth.onAuthStateChanged((user) => {
+  			if (user) {
+    			this.user = this.$fire.auth.currentUser
+    			this.online(this.user.displayName)
+  			} else {
+    			this.$router.push('/login')
+  			}
+  		})
     	},
     	destroyed() {
     		this.offline(this.user.displayName)
     	},
+    	created() {
+    		this.updatesFire()
+    	},
 		mounted() {
-			this.fetchAllUsers()
 			this.forceOff()
-			this.updatesFire()
-			
+
 		},
 		methods: {
 			offline(name) {
@@ -61,10 +62,11 @@
 			forceOff() {
         setTimeout(() => {
           this.offline(this.user.displayName)
-        }, 60000)
+        }, 30000)
       },
 			fetchAllUsers() {
-				
+				this.users = []
+
         this.fireDB.collection("users")
         .get().then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -78,7 +80,7 @@
       updatesFire() {
         this.fireDB.collection("users")
         .onSnapshot((doc) => {
-          
+          this.fetchAllUsers()
         });
       },
 		}

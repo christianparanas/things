@@ -77,7 +77,7 @@ export default {
         setTimeout(() => {
           this.onlineOffline(this.user.displayName)
           console.log('offline')
-        }, 20000)
+        }, 50000)
       },
       // update like on each post onclick
       
