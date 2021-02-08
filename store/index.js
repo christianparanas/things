@@ -1,5 +1,5 @@
 export const state = () => ({
-  postImgPublicId: null
+  postImgPublicId: "null"
 })
 
 export const mutations = {

@@ -21,12 +21,13 @@
 
         <div class="content" v-html="post.content"></div>
         <cld-image
+              v-if="post.postImg != 'null'"
               class="postImg"
               :public-id="post.postImg"
               width="300"
               crop="scale"
               fetchFormat="auto"
-              quality="auto"
+              quality="60"
               loading="lazy"
             />
         <div class="post_interact">
