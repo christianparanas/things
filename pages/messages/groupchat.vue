@@ -14,7 +14,8 @@
 				<img v-if="arr.name == user.displayName? false : true" :src="dynaImg(arr.img)" alt="">
 				</NuxtLink>
 				<div v-if="arr.name == user.displayName? false : true" class="name">{{ arr.name.replace(/ .*/, '') }}</div>
-				<div class="content" v-html="arr.message"></div>
+				<div @click="seeDateSpe" :style="'margin-bottom: ' + seeDateUp" class="content" v-html="arr.message"></div>
+				<div :class="arr.name == user.displayName? 'date1' : 'date2'" v-if="seeDate">{{ $moment(arr.date).calendar() }}</div>
 			</div>
 		</div>
 		<div class="reply">
@@ -30,6 +31,8 @@
 		transition: 'home',
 		data() {
 			return {
+				seeDateUp: '0',
+				seeDate: false,
 				user: [],
 				msg: "",
 				gcMessages: [],
@@ -46,9 +49,13 @@
 			this.fetchGCchats()
 			this.scrollToEnd()
 			this.detectOnline()
-			this.detectOnline()
+			console.log()
 		},
 		methods: {
+			seeDateSpe() {
+				this.seeDate = !this.seeDate
+				this.seeDateUp = this.seeDateUp == '0' ? '10px' : '0'
+			},
 			msgPro(url) {
 				return `/${url}`
 			},
@@ -97,13 +104,12 @@
 			// send data to realdb
 			sendData() {
 				if(this.msg) {
-					const datex = new Date(Date.now());
 					let data = {
 						userId: this.user.uid,
       			name: this.user.displayName,
       			message: this.msg,
-      			date: datex.toDateString(),
-      			time: this.getTime(new Date),
+      			date: this.$moment().format('llll'),
+      			time: this.$moment().format('LT'),
       			img: this.user.photoURL
     			};
 
@@ -166,6 +172,13 @@
       	grid-template-columns: 40px 60%;
       	position: relative;
 
+      	.date2 {
+      		position: absolute;
+      		font-size: 8px;
+      		bottom: -2px;
+      		left: 50px;
+      	}
+
 				.name {
 					position: absolute;
 					top: -17px;
@@ -194,6 +207,14 @@
 				display: grid;
 				place-items: end;
 				grid-template-columns: 1fr 70%;
+				margin-top: 5px;
+
+				.date1 {
+					position: absolute;
+      		font-size: 8px;
+					right: 8px;
+					bottom: -2px;
+				}
 
 				.content {
 					grid-column-start: 2;

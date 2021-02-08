@@ -89,7 +89,7 @@ export default {
       forceOff() {
         setTimeout(() => {
           this.offline(this.user.displayName)
-        }, 50000)
+        }, 30000)
       },
 
       // fetch all posts
