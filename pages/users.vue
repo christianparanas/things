@@ -6,9 +6,9 @@
 			</div>
 		</NuxtLink>
 
-		<div class="users" v-if="user">
+		<div class="users" v-show="user.displayName">
 			<div class="title">Users</div>
-			<NuxtLink v-if="user.uid != use.uid" :to="toUserProfile(use.uid)" class="user" v-for="use in users" :key="use.uid">
+			<NuxtLink v-if="user.uid != use.uid" :to="toUserProfile(use.uid)" class="user" v-for="(use, index) in users" :key="use.uid">
 				<img :src="dynaImg(use.userPic)" alt="">
 				<div class="name">{{ use.name }}<div v-if="use.role == 'admin' ? true: false" class="adminBadge">admin</div></div>
 				<div class="isOnline" v-if="use.isOnline"><div class="isOn"></div></div>
@@ -26,7 +26,7 @@
 			return {
 				user: '',
 				users: [],
-				fireDB: this.$fireModule.firestore(),
+				fireDB: this.$fireModule.firestore(), 
 			}
 		},
 		beforeCreate() {
@@ -34,20 +34,20 @@
   			if (user) {
     			this.user = this.$fire.auth.currentUser
     			this.online(this.user.displayName)
+    			this.updatesFire()
   			} else {
     			this.$router.push('/login')
   			}
   		})
     	},
-    	destroyed() {
+    	beforeDestroyed() {
     		this.offline(this.user.displayName)
     	},
     	created() {
-    		this.updatesFire()
-    	},
+      document.addEventListener('visibilitychange', this.browserInactive, false)
+    },
 		mounted() {
 			this.forceOff()
-
 		},
 		methods: {
 			offline(name) {
@@ -55,6 +55,14 @@
 			},
 			online(name) {
         this.fireDB.collection("users").doc(`${name}`).update({isOnline: true});
+      },
+      browserInactive(e) {
+        if(document.hidden == true) {
+          this.offline(this.user.displayName)
+          console.log('offline')
+        } else {
+          this.online(this.user.displayName)
+        }
       },
 			toUserProfile(url) {
 				return url

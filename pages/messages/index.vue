@@ -23,8 +23,8 @@
 			<NuxtLink to="/messages/groupchat" @click="sole" class="convo">
 				<img class="shadow-md" src="https://avatars.dicebear.com/4.5/api/initials/Member's%20Chatbox.svg" alt="">
 				<div class="name">Members Chatbox</div>
-				<div class="recentmsg" v-if="!recent">Loading...</div>
-				<div class="recentmsg" v-if="recent">{{ recent.name }}: {{ recent.message }}</div>
+				<div class="recentmsg" v-if="isLoading">loading</div>
+				<div class="recentmsg" v-if="!isLoading">{{ recent.name }}: {{ recent.message }}</div>
 			</NuxtLink>
 		</div>
 
@@ -36,6 +36,7 @@
 		transition: 'home',
 		data() {
 			return {
+				isLoading: true,
 				gcMessages: [],
 				recent: [],
 				fireRDB: this.$fireModule.database(),
@@ -70,14 +71,14 @@
 					}
 					this.gcMessages = list
 					this.gcMessages.forEach(obj =>  {
-            obj.message = obj.message.replace(/(?:\r\n|\r|\n)/g, '<br />')
-         })
+			            obj.message = obj.message.replace(/(?:\r\n|\r|\n)/g, '<br />')
+			         })
+					this.recentMsg()
+					this.isLoading = false
 				})
-				this.recentMsg()
-				console.log(this.gcMessages)
 			},
 		},
-		beforeCreate() {
+		created() {
       		this.$fire.auth.onAuthStateChanged((user) => {
       		if (user) {
         		this.user = this.$fire.auth.currentUser
@@ -132,7 +133,7 @@
 				position: relative;
 
 				img {
-					width: 35px;
+					width: 38px;
 					border-radius: 50%;
 				}
 

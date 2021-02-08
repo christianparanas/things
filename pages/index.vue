@@ -22,7 +22,7 @@
           </div>
         </div>
       </div>
-      <Post :post="post" v-for="post in postsArr" @fetchAllPosts="fetchAllPosts" />
+      <Post :post="post" v-for="post in postsArr" :key="post.id" @fetchAllPosts="fetchAllPosts" />
     </div>
   </div>
 </template>
@@ -43,11 +43,10 @@ export default {
         indexSkeleton: [1, 2, 3, 4, 5],
       }
     },
-    destroyed() {
-      this.onlineOffline(this.user.displayName)
+    beforeDestroy() {
+      this.offline(this.user.displayName)
     },
     updated() {
-			console.log("new update dom")
       this.updatesFire()
 		},
     // fetch all data from users and call updates hint
@@ -55,9 +54,23 @@ export default {
        this.checkIfUserAlreadyInUsers()
        this.forceOff()
     },
+    created() {
+      document.addEventListener('visibilitychange', this.browserInactive, false)
+    },
     methods: {
-      onlineOffline(name) {
+      browserInactive(e) {
+        if(document.hidden == true) {
+          this.offline(this.user.displayName)
+          console.log('offline')
+        } else {
+          this.online(this.user.displayName)
+        }
+      },
+      offline(name) {
         this.fireDB.collection("users").doc(`${name}`).update({isOnline: false});
+      },
+      online(name) {
+        this.fireDB.collection("users").doc(`${name}`).update({isOnline: true});
       },
       closeOpenSpecificOp(id) {
         return this[id] = true
@@ -75,12 +88,9 @@ export default {
       },
       forceOff() {
         setTimeout(() => {
-          this.onlineOffline(this.user.displayName)
-          console.log('offline')
+          this.offline(this.user.displayName)
         }, 50000)
       },
-      // update like on each post onclick
-      
 
       // fetch all posts
       fetchAllPosts() {
@@ -139,7 +149,6 @@ export default {
     },
     // before create check if user is authenticated
     beforeCreate() {
-
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
