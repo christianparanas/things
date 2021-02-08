@@ -23,7 +23,6 @@
 				<div class="recentmsg" v-if="!isLoading">{{ recent.name.replace(/ .*/, '') }}: {{ recent.message }}</div>
 			</NuxtLink>
 		</div>
-
 	</div>
 </template>
 
@@ -32,6 +31,7 @@
 		transition: 'home',
 		data() {
 			return {
+				idPic: "oo89sd2s8tikuthzn1im.png",
 				isLoading: true,
 				gcMessages: [],
 				recent: [],

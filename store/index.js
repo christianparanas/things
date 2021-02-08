@@ -1,14 +1,13 @@
-// export const state = () => ({
-//   users: [],
-//   userDetails: []
-// })
+export const state = () => ({
+  postImgPublicId: null
+})
 
-// export const mutations = {
-//   setusers(state, payload) {
-//     state.users = payload.users
-//   },
+export const mutations = {
+  setId(state, payload) {
+    state.postImgPublicId = payload.publicID
+  },
 
-//   setUserDetails(state, payload) {
-//   	state.userDetails = payload.userDetails
-//   }
-// }
+  removeId(state) {
+  	state.postImgPublicId = ""
+  }
+}

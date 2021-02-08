@@ -45,7 +45,15 @@ export default {
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     '@nuxtjs/firebase',
+    '@nuxtjs/cloudinary',
   ],
+
+  cloudinary: {
+    cloudName: 'christianparanas',
+    apiKey: '745354962943413',
+    apiSecret: 'ybCQ0nKaU8Oi78Euw8MXJzsceyw',
+    useComponent: true,
+  },
 
   pwa: {
    manifest: {
