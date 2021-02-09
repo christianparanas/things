@@ -23,10 +23,10 @@
         <cld-image
               v-if="post.postImg != 'null'"
               class="postImg"
-              :public-id="post.postImg"
+              :public-id="`${post.postImg}`"
               width="300"
               crop="scale"
-              fetchFormat="auto"
+              fetchFormat="png"
               quality="60"
               loading="lazy"
             />
