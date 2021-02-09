@@ -14,6 +14,7 @@
 <style lang="scss" scoped>
 	.inputImg {
 		width: 100%;
+		outline: none;
 	}
 
 	.inputImg::-webkit-file-upload-button {
@@ -23,14 +24,13 @@
 	  padding: 3px 6px;
 	  border-radius: 4px;
 	  outline: none;
-	  margin: 0 20px;
+	  
 	}
 
 	.preview {
 		position: absolute;
 		z-index: 11;
 		margin-top: 20px;
-		margin-left: 20px;
 		width: 280px;
 	}
 </style>
