@@ -53,6 +53,9 @@ export default {
     mounted() {
        this.checkIfUserAlreadyInUsers()
        this.forceOff()
+       this.$store.commit('setId', {
+        publicID: "null"
+      })
     },
     created() {
       document.addEventListener('visibilitychange', this.browserInactive, false)
