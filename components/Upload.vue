@@ -46,6 +46,7 @@ export default {
 		}
 	},
   methods: {
+  	// this method will be called when the user select's an image from his/her directory, putting the credentials in the temp variables
   	draftFile(e) {
   		this.filePic = e.target.files[0]
   		this.previewImg = URL.createObjectURL(this.filePic)
@@ -53,10 +54,11 @@ export default {
   			publicID: this.filePic.name.replace(/\..+$/, '')
   		})
   	},
+  	// this method will be called in the compose.vue when user is trying to upload an image
   	postImg() {
   		this.selectFile(this.filePic)
-  		
   	},
+  	// this will be called when postImg is called
     async selectFile(pic) {
       const file = pic
       const fileId = pic.name.replace(/\..+$/, '')

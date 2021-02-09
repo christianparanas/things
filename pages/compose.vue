@@ -50,6 +50,7 @@
             postImg: this.$store.state.postImgPublicId,
           })
 
+          // call the postImg method from Upload.vue to upload the image to cloudinary
           this.$refs.uploadFile.postImg()
 
           this.userInput = ''

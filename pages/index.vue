@@ -117,7 +117,8 @@ export default {
           userPic: this.user.photoURL,
           name: this.user.displayName,
           role: `${this.user.email === 'christiannparanas@gmail.com' ? 'admin': 'user'}`,
-          isOnline: true
+          isOnline: true,
+          creationDate: this.user.metadata.creationTime
         })
       },
       // check if user is already in users collection, if not add them
@@ -153,7 +154,7 @@ export default {
       if (user) {
         this.user = this.$fire.auth.currentUser
         window.onbeforeunload = (e) => {
-          this.onlineOffline(this.user.displayName)
+          this.offline(this.user.displayName)
         }
         this.fetchAllPosts()
       } else {
