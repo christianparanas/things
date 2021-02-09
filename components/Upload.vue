@@ -23,7 +23,7 @@
 	  padding: 3px 6px;
 	  border-radius: 4px;
 	  outline: none;
-	  margin-left: 20px;
+	  margin: 0 20px;
 	}
 
 	.preview {
