@@ -59,7 +59,7 @@
             :public-id="post.postImg"
             width="300"
             crop="scale"
-            fetchFormat="auto"
+            fetchFormat="jpg"
             quality="60"
             loading="lazy"
           />

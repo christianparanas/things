@@ -26,7 +26,7 @@
               :public-id="`${post.postImg}`"
               width="300"
               crop="scale"
-              fetchFormat="png"
+              fetchFormat="jpg"
               quality="60"
               loading="lazy"
             />
