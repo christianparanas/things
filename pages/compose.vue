@@ -83,6 +83,7 @@
         position: absolute;
         top: 240px;
         left: -220px;
+        z-index: 10;
       }
 
       .op {

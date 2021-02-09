@@ -93,6 +93,7 @@
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
+        console.log(this.user)
       } else {
         this.$router.push('/login')
       }
@@ -194,7 +195,7 @@
 
         .post_interact {
           margin: 0 5px 0;
-          padding: 10px 0 10px 53px;
+          padding: 15px 0 10px 53px;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;
           place-items: left;
