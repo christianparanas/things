@@ -57,13 +57,24 @@
 		props: ['user'],
 		data() {
 			return {
-				openNavMenu: false
+				openNavMenu: false,
+				userDetails: []
 			}
 		},
 		directives: {
       		clickOutside: vClickOutside.directive
     	},
+    	beforeCreate() {
+  			this.$fire.auth.onAuthStateChanged((user) => {
+	  			if (user) {
+	    			this.userDetails = this.$fire.auth.currentUser
+	  			}
+  			})
+    	},
 		methods: {
+			offline(name) {
+				this.fireDB.collection("users").doc(`${name}`).update({isOnline: false});
+			},
 			navToProfile(uid) {
 				return uid
 			},
@@ -77,6 +88,7 @@
 				return photo
 			},
 			signOut() {
+				offline(this.userDetails.displayName)
       			this.$fire.auth.signOut()
       		}
 		},
