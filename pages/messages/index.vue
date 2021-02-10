@@ -15,14 +15,6 @@
 				<div class="recentmsg" v-if="!isLoading">{{ recent.name.replace(/ .*/, '') }}: {{ recent.message }}</div>
 			</NuxtLink>
 		</div>
-		<div class="convo-container">
-			<NuxtLink to="/messages/groupchat" @click="sole" class="convo">
-				<img class="shadow-md" src="https://avatars.dicebear.com/4.5/api/initials/Member's%20Chatbox.svg" alt="">
-				<div class="name">Random GC</div>
-				<div class="recentmsg" v-if="isLoading">loading</div>
-				<div class="recentmsg" v-if="!isLoading">{{ recent.name.replace(/ .*/, '') }}: {{ recent.message }}</div>
-			</NuxtLink>
-		</div>
 	</div>
 </template>
 

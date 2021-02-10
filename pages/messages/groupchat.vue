@@ -13,8 +13,8 @@
 				<NuxtLink :to="msgPro(arr.userId)">
 				<img v-if="arr.name == user.displayName? false : true" :src="dynaImg(arr.img)" alt="">
 				</NuxtLink>
-				<div v-if="arr.name == user.displayName? false : true" class="name">{{ arr.name.replace(/ .*/, '') }}</div>
-				<div @click="seeDateSpe" :style="'margin-bottom: ' + seeDateUp" class="content" v-html="arr.message"></div>
+				<div v-if="arr.name == user.displayName? false : true" :style="'top: ' + seeDateUpName" class="name">{{ arr.name.replace(/ .*/, '') }}</div>
+				<div @click="seeDateSpe(arr.id)" :style="'top: ' + seeDateUp" class="content" v-html="arr.message"></div>
 				<div :class="arr.name == user.displayName? 'date1' : 'date2'" v-if="seeDate">{{ $moment(arr.date).calendar() }}</div>
 			</div>
 		</div>
@@ -32,6 +32,7 @@
 		data() {
 			return {
 				seeDateUp: '0',
+				seeDateUpName: '-17px',
 				seeDate: false,
 				user: [],
 				msg: "",
@@ -49,12 +50,13 @@
 			this.fetchGCchats()
 			this.scrollToEnd()
 			this.detectOnline()
-			console.log()
+			console.log(this.gcMessages)
 		},
 		methods: {
-			seeDateSpe() {
+			seeDateSpe(id) {
 				this.seeDate = !this.seeDate
-				this.seeDateUp = this.seeDateUp == '0' ? '10px' : '0'
+				this.seeDateUp = this.seeDateUp == '0' ? '-10px' : '0'
+				this.seeDateUpName = this.seeDateUpName == '-17px' ? '-27px' : '-17px'
 			},
 			msgPro(url) {
 				return `/${url}`
@@ -182,8 +184,9 @@
 				.name {
 					position: absolute;
 					top: -17px;
-					left: 63px;
+					left: 55px;
 					font-size: 10px;
+					transition: top .3s ease;
 				}
 
 				img {
@@ -200,6 +203,8 @@
 					border-radius: 18px;
 					word-wrap: break-word;
 					word-break: break-all;
+					position: relative;
+					transition: top .3s ease;
 				}
 			}
 
