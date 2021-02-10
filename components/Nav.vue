@@ -42,7 +42,7 @@
 					</div>
 					</NuxtLink>
 
-					<button class="logout" @click="signOut">Logout</button>
+					<button class="logout" @click="signOut()">Logout</button>
 				</div>
 			</div>
 		</transition>
