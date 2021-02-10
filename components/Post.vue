@@ -27,7 +27,7 @@
               width="300"
               crop="scale"
               fetchFormat="jpg"
-              quality="60"
+              quality="30"
               loading="lazy"
             />
         <div class="post_interact">
