@@ -93,7 +93,6 @@
       this.$fire.auth.onAuthStateChanged((user) => {
       if (user) {
         this.user = this.$fire.auth.currentUser
-        console.log(this.user)
       } else {
         this.$router.push('/login')
       }

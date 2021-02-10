@@ -6,7 +6,7 @@
 			</div>
 		</NuxtLink>
 
-		<div class="users" v-show="user.displayName">
+		<div class="users" v-if="userFetchComplete">
 			<div class="title">Users</div>
 			<NuxtLink v-if="user.uid != use.uid" :to="toUserProfile(use.uid)" class="user" v-for="(use, index) in users" :key="use.uid">
 				<img :src="dynaImg(use.userPic)" alt="">
@@ -26,13 +26,16 @@
 			return {
 				user: '',
 				users: [],
-				fireDB: this.$fireModule.firestore(), 
+				fireDB: this.$fireModule.firestore(),
+				userFetchComplete: false
 			}
 		},
 		beforeCreate() {
   		this.$fire.auth.onAuthStateChanged((user) => {
   			if (user) {
     			this.user = this.$fire.auth.currentUser
+    			this.userFetchComplete = true
+
     			this.online(this.user.displayName)
     			this.updatesFire()
   			} else {

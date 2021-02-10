@@ -11,6 +11,7 @@
     </div>
     </NuxtLink>
 
+
     <div class="posts-wrapper">
       <div class="skel " v-for="skel in indexSkeleton" v-if="postsArr.length > 0 ? false: true">
         <div class="r animate-pulse"></div>
@@ -23,6 +24,7 @@
         </div>
       </div>
       <Post :post="post" v-for="post in postsArr" :key="post.id" @fetchAllPosts="fetchAllPosts" />
+      
     </div>
   </div>
 </template>
