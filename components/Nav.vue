@@ -88,8 +88,9 @@
 				return photo
 			},
 			signOut() {
-				offline(this.userDetails.displayName)
+				
       			this.$fire.auth.signOut()
+                        offline(this.userDetails.displayName)
       		}
 		},
 	}
