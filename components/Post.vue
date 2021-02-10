@@ -26,8 +26,8 @@
               :public-id="`${post.postImg}`"
               width="300"
               crop="scale"
-              fetchFormat="jpg"
-              quality="90"
+              fetchFormat="auto"
+              quality="auto"
               loading="lazy"
             />
         <div class="post_interact">
