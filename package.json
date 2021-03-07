@@ -9,7 +9,7 @@
     "generate": "nuxt generate"
   },
   "dependencies": {
-    "@nuxt/content": "^1.9.0",
+    "@nuxt/content": "^1.14.0",
     "@nuxtjs/axios": "^5.12.5",
     "@nuxtjs/cloudinary": "^1.0.3-beta-3",
     "@nuxtjs/firebase": "^7.3.0",
