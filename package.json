@@ -18,7 +18,7 @@
     "firebase": "^8.6.1",
     "firebase-admin": "^9.7.0",
     "firebase-functions": "^3.13.2",
-    "nuxt": "^2.15.5",
+    "nuxt": "^2.15.8",
     "v-click-outside": "^3.1.2"
   },
   "devDependencies": {
