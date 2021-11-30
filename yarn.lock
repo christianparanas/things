@@ -2092,14 +2092,14 @@
     consola "^2.15.3"
     defu "^2.0.4"
 
-"@nuxtjs/firebase@^7.5.0":
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/@nuxtjs/firebase/-/firebase-7.5.0.tgz#af5df20d2b2eae61ca938ea47ff03a0237b2fdf3"
-  integrity sha512-esWOBN6caKL4a/rMq52XVZpeitagIvZeTQP3lFMFD/BTaXtTKSvf4e6n5+4vB0xpYHTYfIOghvAXEFTuxd36Ig==
+"@nuxtjs/firebase@^8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@nuxtjs/firebase/-/firebase-8.1.0.tgz#a85d75a736c7441e695f742d5856e0ca5f2cd964"
+  integrity sha512-gbbtZt44QFCTWOzeY/IqgeWh+CYm5StzBVdGNKZH4QjySqxfUAm5Pnl8WsTQxyuJR6ltKO30/1IXnuCTEECQLg==
   dependencies:
     consola "^2.15.3"
   optionalDependencies:
-    firebase-admin "^9.5.0"
+    firebase-admin "^10.0.0"
 
 "@nuxtjs/moment@^1.6.1":
   version "1.6.1"
@@ -5767,22 +5767,6 @@ firebase-admin@^10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-10.0.0.tgz#0638cd50d2395fddc9d8af4e1699d0a10b1b22d8"
   integrity sha512-EOAk5ZaqXhBBvx9ZyXd28kw8glMTt3xl0g3BepGRCy0RSSUPGOzfAqjGhc65guSKgFOpT5mAUycYcJbqullKUQ==
-  dependencies:
-    "@firebase/database-compat" "^0.1.1"
-    "@firebase/database-types" "^0.7.2"
-    "@types/node" ">=12.12.47"
-    dicer "^0.3.0"
-    jsonwebtoken "^8.5.1"
-    jwks-rsa "^2.0.2"
-    node-forge "^0.10.0"
-  optionalDependencies:
-    "@google-cloud/firestore" "^4.5.0"
-    "@google-cloud/storage" "^5.3.0"
-
-firebase-admin@^9.5.0:
-  version "9.12.0"
-  resolved "https://registry.yarnpkg.com/firebase-admin/-/firebase-admin-9.12.0.tgz#d7e889e97c9c31610efbcd131bb6d06a783af757"
-  integrity sha512-AtA7OH5RbIFGoc0gZOQgaYC6cdjdhZv4w3XgWoupkPKO1HY+0GzixOuXDa75kFeoVyhIyo4PkLg/GAC1dC1P6w==
   dependencies:
     "@firebase/database-compat" "^0.1.1"
     "@firebase/database-types" "^0.7.2"
